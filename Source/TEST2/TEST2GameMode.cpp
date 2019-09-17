@@ -5,6 +5,7 @@
 #include "UObject/ConstructorHelpers.h"
 #include <WinTcp/ClientSocket.h>
 #include <WinTcp/Account.h>
+#include "Entity.h"
 
 ATEST2GameMode::ATEST2GameMode()
 {
@@ -17,6 +18,7 @@ ATEST2GameMode::ATEST2GameMode()
 
 	WinTcp::CLIENT_TCP->Initial(0);
 	WinTcp::ACCOUNT;
+	ENTITY;
 	WinTcp::ConnectServer("127.0.0.1", 31700);
 }
 
@@ -25,6 +27,6 @@ void ATEST2GameMode::InitGameState() {
 }
 
 void ATEST2GameMode::UpdateTick() {
-	auto pActo = SpawnPlayer();
+	//auto pActo = SpawnPlayer();
 	WinTcp::CLIENT_TCP->update(0);
 }
