@@ -18,7 +18,7 @@ ATEST2GameMode::ATEST2GameMode()
 
 	WinTcp::CLIENT_TCP->Initial(0);
 	WinTcp::ACCOUNT;
-	ENTITY;
+	ENTITYMGR;
 	WinTcp::ConnectServer("127.0.0.1", 31700);
 }
 

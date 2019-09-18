@@ -1,16 +1,16 @@
 #pragma once
 #include "message/Packet.h"
-class Entity
+class EntityMgr
 {
 public:
-	Entity();
-	~Entity() {};
+	EntityMgr();
+	~EntityMgr() {};
 	bool _W_C_ENTITY(::google::protobuf::Message* _packet);
 public:
-	static Entity* Instance() {
-		static Entity s_Instace;
+	static EntityMgr* Instance() {
+		static EntityMgr s_Instace;
 		return &s_Instace;
 	}
 };
 
-#define ENTITY Entity::Instance()
+#define ENTITYMGR EntityMgr::Instance()
