@@ -14,6 +14,17 @@ bool Entity::_W_C_ENTITY(::google::protobuf::Message* _packet) {
 		return false;
 	}
 
+	for (auto i = 0; i < packet->entityinfo_size(); i++) {
+		const W_C_ENTITY_Entity pEntityInfo = packet->entityinfo(i);
+		if (pEntityInfo.has_data()) {
+			
+		}
+
+		if (pEntityInfo.has_move()) {
+		
+		}
+	}
+
 
 	return true;
 }

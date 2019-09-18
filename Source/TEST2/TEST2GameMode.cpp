@@ -3,8 +3,8 @@
 #include "TEST2GameMode.h"
 #include "TEST2Character.h"
 #include "UObject/ConstructorHelpers.h"
-#include <WinTcp/ClientSocket.h>
-#include <WinTcp/Account.h>
+#include "WinTcp/ClientSocket.h"
+#include "WinTcp/Account.h"
 #include "Entity.h"
 
 ATEST2GameMode::ATEST2GameMode()
