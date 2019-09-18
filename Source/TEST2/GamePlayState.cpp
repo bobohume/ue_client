@@ -13,14 +13,14 @@ AGamePlayState::AGamePlayState()
 	WinTcp::ACCOUNT;
 	ENTITYMGR;
 	PLAYER;
-	WinTcp::ConnectServer("127.0.0.1", 31700);
 }
 
 // Called when the game starts or when spawned
 void AGamePlayState::BeginPlay()
 {
 	Super::BeginPlay();
-
+	WinTcp::DisconnectServer();
+	WinTcp::ConnectServer("127.0.0.1", 31700);
 }
 
 // Called every frame
