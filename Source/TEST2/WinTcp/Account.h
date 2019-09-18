@@ -22,10 +22,10 @@ public:
 	bool LoginGame();
 	bool LoginAccount();
 
-	bool _W_C_SelectPlayerResponse(::google::protobuf::Message* _packet);
-	bool _W_C_CreatePlayerResponse(::google::protobuf::Message* _packet);
-	bool _A_C_LoginRequest(::google::protobuf::Message* _packet);
-	bool _A_C_RegisterResponse(::google::protobuf::Message* _packet);
+	bool _W_C_SelectPlayerResponse(::google::protobuf::Message* _packet);//选角反馈
+	bool _W_C_CreatePlayerResponse(::google::protobuf::Message* _packet);//创建玩家
+	bool _A_C_LoginRequest(::google::protobuf::Message* _packet);//登录反馈
+	bool _A_C_RegisterResponse(::google::protobuf::Message* _packet);//创建账号
 
 	int64_t m_AccountId;
 	int64_t m_PlayerId;

@@ -13,16 +13,6 @@ class ATEST2GameMode : public AGameModeBase
 
 public:
 	ATEST2GameMode();
-
-	virtual void InitGameState();
-
-	/** Base turn rate, in deg/sec. Other scaling may affect final turn rate. */
-	/** Base turn rate, in deg/sec. Other scaling may affect final turn rate. */
-	UFUNCTION(BlueprintCallable, Category = "C++ | NetWork")
-	void UpdateTick();
-
-	UFUNCTION(BlueprintImplementableEvent, Category = "C++ | Entity")
-	APawn* SpawnPlayer();
 };
 
 

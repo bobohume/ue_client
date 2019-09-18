@@ -29,6 +29,10 @@ public:
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category=Camera)
 	float BaseLookUpRate;
 
+
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category =Entity)
+	int64 Id;
+
 protected:
 
 	/** Resets HMD orientation in VR. */
