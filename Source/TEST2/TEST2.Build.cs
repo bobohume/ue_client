@@ -8,7 +8,7 @@ public class TEST2 : ModuleRules
 	{
 		PCHUsage = PCHUsageMode.UseExplicitOrSharedPCHs;
 
-		PublicDependencyModuleNames.AddRange(new string[] { "Core",  "CoreUObject", "Engine", "InputCore", "HeadMountedDisplay", "Navmesh", "NavigationSystem" });
+		PublicDependencyModuleNames.AddRange(new string[] { "Core",  "CoreUObject", "Engine", "InputCore", "HeadMountedDisplay"});
         bEnableShadowVariableWarnings = false;
         bEnableUndefinedIdentifierWarnings = false;
         bEnableExceptions = true;
