@@ -28,7 +28,7 @@ static char* EXPORT_PATH = "E:/git/myserver/bin/nav/";
 
 struct NavMeshSetHeader
 {
-	int magic;
+	//int magic;
 	int version;
 	int numTiles;
 	dtNavMeshParams params;
@@ -36,7 +36,8 @@ struct NavMeshSetHeader
 
 struct NavMeshTileHeader
 {
-	dtTileRef tileRef;
+	//dtTileRef tileRef;//UE4 dtTileRef
+	unsigned int tileRef;
 	int dataSize;
 };
 
@@ -163,7 +164,7 @@ void FExportDataModule::SaveData(const char* path, const dtNavMesh* mesh)
 
 	// Store header.
 	NavMeshSetHeader header;
-	header.magic = NAVMESHSET_MAGIC;
+	//header.magic = NAVMESHSET_MAGIC;
 	header.version = NAVMESHSET_VERSION;
 	header.numTiles = 0;
 	for (int i = 0; i < mesh->getMaxTiles(); ++i)
