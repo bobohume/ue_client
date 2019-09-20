@@ -24,7 +24,7 @@
 
 static const int NAVMESHSET_MAGIC = 'M' << 24 | 'S' << 16 | 'E' << 8 | 'T'; //'MSET';
 static const int NAVMESHSET_VERSION = 1;
-static char* EXPORT_PATH = "E:/myserver/bin/nav/";
+static char* EXPORT_PATH = "E:/git/myserver/bin/nav/";
 
 struct NavMeshSetHeader
 {
@@ -133,7 +133,7 @@ void FExportDataModule::PluginButtonClicked()
 			const FPImplRecastNavMesh* tempRN = RecastNavData->GetRecastNavMeshImplTrick();
 			const dtNavMesh* NavMesh = tempRN->GetRecastMesh();
 			char text[128];
-			snprintf(text, 32, "%s%s.nav", EXPORT_PATH, TCHAR_TO_UTF8(*InWorld->GetName()));//获取地图名字
+			snprintf(text, 128, "%s%s.nav", EXPORT_PATH, TCHAR_TO_UTF8(*InWorld->GetName()));//获取地图名字
 			if (NavMesh != NULL)
 			{
 				UE_LOG(LogNavigation, Error, TEXT("Succeed to get navigation data!!!"));
