@@ -23,9 +23,14 @@
 #include "EngineUtils.h"
 #endif
 
+#ifndef _WIN32
+static const char* EXPORT_PATH = "/Users/gonet/git/myserver/bin/nav";
+#elif
+static const char* EXPORT_PATH = "E:/git/myserver/bin/nav/";
+#endif
+
 static const int NAVMESHSET_MAGIC = 'M' << 24 | 'S' << 16 | 'E' << 8 | 'T'; //'MSET';
 static const int NAVMESHSET_VERSION = 1;
-static const char* EXPORT_PATH = "E:/git/myserver/bin/nav/";
 static const FName ExportDataTabName("ExportData");
 
 static unsigned int s_tileBits = 0;
