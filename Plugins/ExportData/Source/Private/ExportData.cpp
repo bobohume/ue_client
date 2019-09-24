@@ -9,6 +9,7 @@
 #include "ExportDataCommands.h"
 
 #include "LevelEditor.h"
+#include "dtMeshTile3.h"
 
 #if WITH_RECAST
 
@@ -25,23 +26,10 @@
 static const int NAVMESHSET_MAGIC = 'M' << 24 | 'S' << 16 | 'E' << 8 | 'T'; //'MSET';
 static const int NAVMESHSET_VERSION = 1;
 static char* EXPORT_PATH = "E:/git/myserver/bin/nav/";
-
-struct NavMeshSetHeader
-{
-	//int magic;
-	int version;
-	int numTiles;
-	dtNavMeshParams params;
-};
-
-struct NavMeshTileHeader
-{
-	//dtTileRef tileRef;//UE4 dtTileRef
-	unsigned int tileRef;
-	int dataSize;
-};
-
 static const FName ExportDataTabName("ExportData");
+
+static unsigned int s_tileBits = 0;
+static unsigned int s_polyBits = 0;
 
 #define LOCTEXT_NAMESPACE "FExportDataModule"
 
@@ -89,37 +77,6 @@ class ARecastNavMeshTrick : public ARecastNavMesh { public: const FPImplRecastNa
 
 void FExportDataModule::PluginButtonClicked()
 {
-	// Put your "OnButtonClicked" stuff here
-	/*FText DialogText = FText::Format(
-							LOCTEXT("PluginButtonDialogText", "Add code to {0} in {1} to override this button's actions"),
-							FText::FromString(TEXT("FExportDataModule::PluginButtonClicked()")),
-							FText::FromString(TEXT("ExportData.cpp"))
-					   );
-	FMessageDialog::Open(EAppMsgType::Ok, DialogText);*/
-
-	//FWorldContext &EditorContext = GEditor->GetEditorWorldContext();
-	//for (int32 NavDataIndex = 0; NavDataIndex < EditorContext.World()->GetNavigationSystem()->NavDataSet.Num(); ++NavDataIndex)
-	//{
-	//	ANavigationData* NavData = EditorContext.World()->GetNavigationSystem()->NavDataSet[NavDataIndex];
-	//	if (NavData && !NavData->IsPendingKill())
-	//	{
-	//		ARecastNavMesh * RecastNavData = Cast<ARecastNavMesh>(NavData);
-	//		dtNavMesh* NavMesh = RecastNavData->GetRecastNavMeshImpl()->GetRecastMesh();
-	//		char text[32];
-	//		snprintf(text, 32, "%d.navmesh", NavDataIndex);
-	//		if (NavMesh != NULL)
-	//		{
-	//			UE_LOG(LogNavigation, Error, TEXT("Succeed to get navigation data!!!"));
-	//			SaveData(text, NavMesh);
-	//		}
-	//		else
-	//		{
-	//			UE_LOG(LogNavigation, Error, TEXT("Failed to export navigation data due to navigation data"));
-	//		}			
-	//	}
-	//}
-
-
 	FWorldContext &EditorContext = GEditor->GetEditorWorldContext();
 	UWorld * InWorld = EditorContext.World();
 	UNavigationSystemV1* navigationSystem = FNavigationSystem::GetCurrent<UNavigationSystemV1>(InWorld);
@@ -158,6 +115,18 @@ void FExportDataModule::AddToolbarExtension(FToolBarBuilder& Builder)
 	Builder.AddToolBarButton(FExportDataCommands::Get().PluginAction);
 }
 
+dtTileRef3 encodePolyId(unsigned int salt, unsigned int it, unsigned int ip, const dtNavMesh* mesh)
+{
+	return (dtTileRef3)((salt << (s_polyBits + s_tileBits)) | ((dtTileRef3)it << s_polyBits) | (dtTileRef3)ip);
+}
+
+dtTileRef3 getTileRef(const dtMeshTile* tile, const dtNavMesh* mesh)
+{
+	if (!tile) return 0;
+	const unsigned int it = (unsigned int)(tile - mesh->getTile(0));
+	return (dtTileRef3)encodePolyId(tile->salt, it, 0, mesh);
+}
+
 void FExportDataModule::SaveData(const char* path, const dtNavMesh* mesh)
 {
 	if (!mesh) return;
@@ -167,11 +136,15 @@ void FExportDataModule::SaveData(const char* path, const dtNavMesh* mesh)
 	//header.magic = NAVMESHSET_MAGIC;
 	header.version = NAVMESHSET_VERSION;
 	header.numTiles = 0;
+	int maxPolys = 0;
 	for (int i = 0; i < mesh->getMaxTiles(); ++i)
 	{
 		const dtMeshTile* tile = mesh->getTile(i);
 		if (!tile || !tile->header || !tile->dataSize) continue;
 		header.numTiles++;
+		if (tile->header->polyCount > maxPolys) {
+			maxPolys = tile->header->polyCount;
+		}
 	}
 	
 	//判断是否有数据，没有数据，直接返回
@@ -183,6 +156,9 @@ void FExportDataModule::SaveData(const char* path, const dtNavMesh* mesh)
 		return;
 
 	memcpy(&header.params, mesh->getParams(), sizeof(dtNavMeshParams));
+	header.params.maxPolys = maxPolys;
+	s_tileBits = dtIlog2(dtNextPow2((unsigned int)header.params.maxTiles));
+	s_polyBits = dtIlog2(dtNextPow2((unsigned int)header.params.maxPolys));
 	fwrite(&header, sizeof(NavMeshSetHeader), 1, fp);
 
 	// Store tiles.
@@ -191,12 +167,80 @@ void FExportDataModule::SaveData(const char* path, const dtNavMesh* mesh)
 		const dtMeshTile* tile = mesh->getTile(i);
 		if (!tile || !tile->header || !tile->dataSize) continue;
 
-		NavMeshTileHeader tileHeader;
-		tileHeader.tileRef = mesh->getTileRef(tile);
-		tileHeader.dataSize = tile->dataSize;
-		fwrite(&tileHeader, sizeof(tileHeader), 1, fp);
+		const int headerSize = dtAlign4(sizeof(dtMeshHeader3));
+		const int vertsSize = dtAlign4(sizeof(float) * 3 * tile->header->vertCount);
+		const int polysSize = dtAlign4(sizeof(dtPoly)*tile->header->polyCount);
+		const int linksSize = dtAlign4(sizeof(dtLink3)*tile->header->maxLinkCount);
+		const int detailMeshesSize = dtAlign4(sizeof(dtPolyDetail)*tile->header->detailMeshCount);
+		const int detailVertsSize = dtAlign4(sizeof(float) * 3 * tile->header->detailVertCount);
+		const int detailTrisSize = dtAlign4(sizeof(unsigned char) * 4 * tile->header->detailTriCount);
+		const int bvTreeSize = dtAlign4(sizeof(dtBVNode)*tile->header->bvNodeCount);
+		const int offMeshConsSize = dtAlign4(sizeof(dtOffMeshConnection)*tile->header->offMeshConCount);
 
-		fwrite(tile->data, tile->dataSize, 1, fp);
+		const int dataSize = headerSize + vertsSize + polysSize + linksSize +
+			detailMeshesSize + detailVertsSize + detailTrisSize +
+			bvTreeSize + offMeshConsSize;
+
+		unsigned char* data = (unsigned char*)malloc(sizeof(unsigned char)*dataSize);
+		if (!data)
+		{
+			//dtFree(offMeshConClass);
+			return;
+		}
+		memset(data, 0, dataSize);
+
+		unsigned char* d = data;
+
+		dtMeshHeader3* header = dtGetThenAdvanceBufferPointer<dtMeshHeader3>(d, headerSize);
+		float* navVerts = dtGetThenAdvanceBufferPointer<float>(d, vertsSize);
+		dtPoly* navPolys = dtGetThenAdvanceBufferPointer<dtPoly>(d, polysSize);
+		//dtLink* navPolys = dtGetThenAdvanceBufferPointer<dtLink3>(d, polysSize);
+		d += linksSize; // Ignore links; just leave enough space for them. They'll be created on load.
+		dtPolyDetail* navDMeshes = dtGetThenAdvanceBufferPointer<dtPolyDetail>(d, detailMeshesSize);
+		float* navDVerts = dtGetThenAdvanceBufferPointer<float>(d, detailVertsSize);
+		unsigned char* navDTris = dtGetThenAdvanceBufferPointer<unsigned char>(d, detailTrisSize);
+		dtBVNode* navBvtree = dtGetThenAdvanceBufferPointer<dtBVNode>(d, bvTreeSize);
+		dtOffMeshConnection* offMeshCons = dtGetThenAdvanceBufferPointer<dtOffMeshConnection>(d, offMeshConsSize);
+
+		// Store header
+		header->magic = tile->header->magic;
+		header->version = tile->header->version;
+		header->x = tile->header->x;
+		header->y = tile->header->y;
+		header->layer = tile->header->layer;
+		header->userId = tile->header->userId;
+		header->polyCount = tile->header->polyCount;
+		header->vertCount = tile->header->vertCount;
+		header->maxLinkCount = tile->header->maxLinkCount;
+		for (auto i = 0; i < 3; i++) {
+			header->bmin[i] = tile->header->bmin[i];
+			header->bmax[i] = tile->header->bmax[i];
+		}
+		header->detailMeshCount = tile->header->detailMeshCount;
+		header->detailVertCount = tile->header->detailVertCount;
+		header->detailTriCount = tile->header->detailTriCount;
+		header->bvQuantFactor = tile->header->bvQuantFactor;
+		header->offMeshBase = tile->header->offMeshBase;
+		header->walkableHeight = tile->header->walkableHeight;
+		header->walkableRadius = tile->header->walkableRadius;
+		header->walkableClimb = tile->header->walkableClimb;
+		header->offMeshConCount = tile->header->offMeshConCount;
+		header->bvNodeCount = tile->header->bvNodeCount;
+
+		memcpy(navVerts, tile->verts, vertsSize);
+		memcpy(navPolys, tile->polys, polysSize);
+		memcpy(navDMeshes, tile->detailMeshes, detailMeshesSize);
+		memcpy(navDVerts, tile->detailVerts, detailVertsSize);
+		memcpy(navDTris, tile->detailTris, detailTrisSize);
+		memcpy(navBvtree, tile->bvTree, bvTreeSize);
+		memcpy(offMeshCons, tile->offMeshCons, offMeshConsSize);
+
+		NavMeshTileHeader tileHeader;
+		tileHeader.tileRef = getTileRef(tile, mesh);
+		tileHeader.dataSize = dataSize;	
+		fwrite(&tileHeader, sizeof(tileHeader), 1, fp);
+		fwrite(data, dataSize, 1, fp);
+		free(data);
 	}
 
 	fclose(fp);
