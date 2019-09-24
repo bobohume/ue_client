@@ -25,7 +25,7 @@
 
 static const int NAVMESHSET_MAGIC = 'M' << 24 | 'S' << 16 | 'E' << 8 | 'T'; //'MSET';
 static const int NAVMESHSET_VERSION = 1;
-static char* EXPORT_PATH = "E:/git/myserver/bin/nav/";
+static const char* EXPORT_PATH = "E:/git/myserver/bin/nav/";
 static const FName ExportDataTabName("ExportData");
 
 static unsigned int s_tileBits = 0;
