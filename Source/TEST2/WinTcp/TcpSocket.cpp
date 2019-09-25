@@ -65,7 +65,7 @@ FindStr:
                 goto FindStr;
             }
         }
-        return pSubData - pInData;
+        return pSubData - pInData + TCP_END_LENGTH;
     }
     return -1;
 }
