@@ -1,4 +1,4 @@
-﻿#include "TcpSocket.h"
+#include "TcpSocket.h"
 #include <assert.h>
 #include "message/Packet.h"
 
@@ -51,12 +51,29 @@ void WinTcp::CTcpSocket::HandlePacket(const char* pInData, int nBufferSize)
 	}
 }
 
-#pragma optimize("",off) 
-void seekToTcpEnd(const char *pInData, int nBufferSize, bool &bFind, int& nPacketSize) {
-	auto substr =  (pInData, TCP_END);
-	if (substr != NULL) {
+#pragma optimize("",off)
+int memstr(const char* pInData, int nInDataSize, const char* pFindData, int nFindDataSize) {
+    char* pData = (char *)pInData;
+    int nDataSize = nInDataSize;
+FindStr:
+    const char * pSubData = (const char *)memchr(pData, pFindData[0], nDataSize);
+    if (pSubData != NULL) {
+        for(int i = 1; i < nFindDataSize; i++){
+            if(pSubData[i] != pFindData[i]){
+                pData = (char *)pSubData;
+                nDataSize -= pSubData - pInData;
+                goto FindStr;
+            }
+        }
+        return pSubData - pInData;
+    }
+    return -1;
+}
+
+void seekToTcpEnd(const char* pInData, int nBufferSize, bool &bFind, int& nPacketSize) {
+	nPacketSize = memstr(pInData, nBufferSize, TCP_END, TCP_END_LENGTH);
+	if (nPacketSize != -1) {
 		bFind = true;
-		nPacketSize = substr - pInData + TCP_END_LENGTH;
 		return;
 	}
 
@@ -65,7 +82,7 @@ void seekToTcpEnd(const char *pInData, int nBufferSize, bool &bFind, int& nPacke
 	return;
 }
 
-void WinTcp::CTcpSocket::ReceivePacket(const char *pInData, int nInDataSize)
+void WinTcp::CTcpSocket::ReceivePacket(const char* pInData, int nInDataSize)
 {
 	if (!pInData || nInDataSize <= 0)
 	{

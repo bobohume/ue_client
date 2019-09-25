@@ -25,7 +25,7 @@
 
 #ifdef _WIN32
 static const char* EXPORT_PATH = "E:/git/myserver/bin/nav/";
-#elif
+#else
 static const char* EXPORT_PATH = "/Users/gonet/git/myserver/bin/nav/";
 #endif
 
