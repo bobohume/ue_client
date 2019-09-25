@@ -21,8 +21,7 @@ void ACGonetState::BeginPlay()
 	Super::BeginPlay();
 	WinTcp::DisconnectServer();
 	WinTcp::ConnectServer("127.0.0.1", 31700);
-	int  AA = 0;
-
+	EntityMap.clear();
 }
 
 // Called every frame

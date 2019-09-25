@@ -14,9 +14,8 @@ public:
 	typedef ISocket Parent;
 
 protected:
-	char *	m_pInBuffer;
+	char	m_pInBuffer[10*1024*1024];
 	int		m_nHalfSize;
-	bool	m_bHalf;
 
 protected:
 	virtual void OnClear();
@@ -25,8 +24,6 @@ protected:
 public:
 	CTcpSocket();
 	virtual ~CTcpSocket(void);
-
-	virtual void SetMaxReceiveBufferSize(int MaxReceiveSize);
 
 protected:
 	virtual void HandlePacket(const char *pBuf, int nBufferSize);

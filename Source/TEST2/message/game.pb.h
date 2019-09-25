@@ -6,12 +6,6 @@
 
 #include <string>
 
-#pragma warning(disable:4800)
-#pragma warning(disable:4125)
-#pragma warning(disable:4668)
-#pragma warning(disable:4647)
-#pragma warning(disable:4146)
-
 #include <google/protobuf/stubs/common.h>
 
 #if GOOGLE_PROTOBUF_VERSION < 3005000
@@ -43,7 +37,7 @@ namespace protobuf_game_2eproto {
 struct TableStruct {
   static const ::google::protobuf::internal::ParseTableField entries[];
   static const ::google::protobuf::internal::AuxillaryParseTableField aux[];
-  static const ::google::protobuf::internal::ParseTable schema[11];
+  static const ::google::protobuf::internal::ParseTable schema[12];
   static const ::google::protobuf::internal::FieldMetadata field_metadata[];
   static const ::google::protobuf::internal::SerializationTable serialization_table[];
   static const ::google::protobuf::uint32 offsets[];
@@ -63,6 +57,8 @@ void InitDefaultsW_C_ENTITY_Entity_DataMaskImpl();
 void InitDefaultsW_C_ENTITY_Entity_DataMask();
 void InitDefaultsW_C_ENTITY_Entity_MoveMaskImpl();
 void InitDefaultsW_C_ENTITY_Entity_MoveMask();
+void InitDefaultsW_C_ENTITY_Entity_StatsMaskImpl();
+void InitDefaultsW_C_ENTITY_Entity_StatsMask();
 void InitDefaultsW_C_ENTITY_EntityImpl();
 void InitDefaultsW_C_ENTITY_Entity();
 void InitDefaultsW_C_ENTITYImpl();
@@ -79,6 +75,7 @@ inline void InitDefaults() {
   InitDefaultsW_C_LoginMap();
   InitDefaultsW_C_ENTITY_Entity_DataMask();
   InitDefaultsW_C_ENTITY_Entity_MoveMask();
+  InitDefaultsW_C_ENTITY_Entity_StatsMask();
   InitDefaultsW_C_ENTITY_Entity();
   InitDefaultsW_C_ENTITY();
   InitDefaultsW_C_DEL_SIMOBJ();
@@ -116,6 +113,9 @@ extern W_C_ENTITY_Entity_DataMaskDefaultTypeInternal _W_C_ENTITY_Entity_DataMask
 class W_C_ENTITY_Entity_MoveMask;
 class W_C_ENTITY_Entity_MoveMaskDefaultTypeInternal;
 extern W_C_ENTITY_Entity_MoveMaskDefaultTypeInternal _W_C_ENTITY_Entity_MoveMask_default_instance_;
+class W_C_ENTITY_Entity_StatsMask;
+class W_C_ENTITY_Entity_StatsMaskDefaultTypeInternal;
+extern W_C_ENTITY_Entity_StatsMaskDefaultTypeInternal _W_C_ENTITY_Entity_StatsMask_default_instance_;
 class W_C_LoginMap;
 class W_C_LoginMapDefaultTypeInternal;
 extern W_C_LoginMapDefaultTypeInternal _W_C_LoginMap_default_instance_;
@@ -919,6 +919,203 @@ class W_C_ENTITY_Entity_MoveMask : public ::google::protobuf::Message /* @@proto
 };
 // -------------------------------------------------------------------
 
+class W_C_ENTITY_Entity_StatsMask : public ::google::protobuf::Message /* @@protoc_insertion_point(class_definition:message.W_C_ENTITY.Entity.StatsMask) */ {
+ public:
+  W_C_ENTITY_Entity_StatsMask();
+  virtual ~W_C_ENTITY_Entity_StatsMask();
+
+  W_C_ENTITY_Entity_StatsMask(const W_C_ENTITY_Entity_StatsMask& from);
+
+  inline W_C_ENTITY_Entity_StatsMask& operator=(const W_C_ENTITY_Entity_StatsMask& from) {
+    CopyFrom(from);
+    return *this;
+  }
+  #if LANG_CXX11
+  W_C_ENTITY_Entity_StatsMask(W_C_ENTITY_Entity_StatsMask&& from) noexcept
+    : W_C_ENTITY_Entity_StatsMask() {
+    *this = ::std::move(from);
+  }
+
+  inline W_C_ENTITY_Entity_StatsMask& operator=(W_C_ENTITY_Entity_StatsMask&& from) noexcept {
+    if (GetArenaNoVirtual() == from.GetArenaNoVirtual()) {
+      if (this != &from) InternalSwap(&from);
+    } else {
+      CopyFrom(from);
+    }
+    return *this;
+  }
+  #endif
+  static const ::google::protobuf::Descriptor* descriptor();
+  static const W_C_ENTITY_Entity_StatsMask& default_instance();
+
+  static void InitAsDefaultInstance();  // FOR INTERNAL USE ONLY
+  static inline const W_C_ENTITY_Entity_StatsMask* internal_default_instance() {
+    return reinterpret_cast<const W_C_ENTITY_Entity_StatsMask*>(
+               &_W_C_ENTITY_Entity_StatsMask_default_instance_);
+  }
+  static PROTOBUF_CONSTEXPR int const kIndexInFileMessages =
+    7;
+
+  void Swap(W_C_ENTITY_Entity_StatsMask* other);
+  friend void swap(W_C_ENTITY_Entity_StatsMask& a, W_C_ENTITY_Entity_StatsMask& b) {
+    a.Swap(&b);
+  }
+
+  // implements Message ----------------------------------------------
+
+  inline W_C_ENTITY_Entity_StatsMask* New() const PROTOBUF_FINAL { return New(NULL); }
+
+  W_C_ENTITY_Entity_StatsMask* New(::google::protobuf::Arena* arena) const PROTOBUF_FINAL;
+  void CopyFrom(const ::google::protobuf::Message& from) PROTOBUF_FINAL;
+  void MergeFrom(const ::google::protobuf::Message& from) PROTOBUF_FINAL;
+  void CopyFrom(const W_C_ENTITY_Entity_StatsMask& from);
+  void MergeFrom(const W_C_ENTITY_Entity_StatsMask& from);
+  void Clear() PROTOBUF_FINAL;
+  bool IsInitialized() const PROTOBUF_FINAL;
+
+  size_t ByteSizeLong() const PROTOBUF_FINAL;
+  bool MergePartialFromCodedStream(
+      ::google::protobuf::io::CodedInputStream* input) PROTOBUF_FINAL;
+  void SerializeWithCachedSizes(
+      ::google::protobuf::io::CodedOutputStream* output) const PROTOBUF_FINAL;
+  ::google::protobuf::uint8* InternalSerializeWithCachedSizesToArray(
+      bool deterministic, ::google::protobuf::uint8* target) const PROTOBUF_FINAL;
+  int GetCachedSize() const PROTOBUF_FINAL { return _cached_size_; }
+  private:
+  void SharedCtor();
+  void SharedDtor();
+  void SetCachedSize(int size) const PROTOBUF_FINAL;
+  void InternalSwap(W_C_ENTITY_Entity_StatsMask* other);
+  private:
+  inline ::google::protobuf::Arena* GetArenaNoVirtual() const {
+    return NULL;
+  }
+  inline void* MaybeArenaPtr() const {
+    return NULL;
+  }
+  public:
+
+  ::google::protobuf::Metadata GetMetadata() const PROTOBUF_FINAL;
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  // int32 HP = 1;
+  void clear_hp();
+  static const int kHPFieldNumber = 1;
+  ::google::protobuf::int32 hp() const;
+  void set_hp(::google::protobuf::int32 value);
+
+  // int32 MP = 2;
+  void clear_mp();
+  static const int kMPFieldNumber = 2;
+  ::google::protobuf::int32 mp() const;
+  void set_mp(::google::protobuf::int32 value);
+
+  // int32 MaxHP = 3;
+  void clear_maxhp();
+  static const int kMaxHPFieldNumber = 3;
+  ::google::protobuf::int32 maxhp() const;
+  void set_maxhp(::google::protobuf::int32 value);
+
+  // int32 MaxMP = 4;
+  void clear_maxmp();
+  static const int kMaxMPFieldNumber = 4;
+  ::google::protobuf::int32 maxmp() const;
+  void set_maxmp(::google::protobuf::int32 value);
+
+  // int32 PhyDamage = 5;
+  void clear_phydamage();
+  static const int kPhyDamageFieldNumber = 5;
+  ::google::protobuf::int32 phydamage() const;
+  void set_phydamage(::google::protobuf::int32 value);
+
+  // int32 PhyDefence = 6;
+  void clear_phydefence();
+  static const int kPhyDefenceFieldNumber = 6;
+  ::google::protobuf::int32 phydefence() const;
+  void set_phydefence(::google::protobuf::int32 value);
+
+  // int32 SplDamage = 7;
+  void clear_spldamage();
+  static const int kSplDamageFieldNumber = 7;
+  ::google::protobuf::int32 spldamage() const;
+  void set_spldamage(::google::protobuf::int32 value);
+
+  // int32 SplDefence = 8;
+  void clear_spldefence();
+  static const int kSplDefenceFieldNumber = 8;
+  ::google::protobuf::int32 spldefence() const;
+  void set_spldefence(::google::protobuf::int32 value);
+
+  // int32 Heal = 9;
+  void clear_heal();
+  static const int kHealFieldNumber = 9;
+  ::google::protobuf::int32 heal() const;
+  void set_heal(::google::protobuf::int32 value);
+
+  // int32 CriticalTimes = 10;
+  void clear_criticaltimes();
+  static const int kCriticalTimesFieldNumber = 10;
+  ::google::protobuf::int32 criticaltimes() const;
+  void set_criticaltimes(::google::protobuf::int32 value);
+
+  // int32 Critical = 11;
+  void clear_critical();
+  static const int kCriticalFieldNumber = 11;
+  ::google::protobuf::int32 critical() const;
+  void set_critical(::google::protobuf::int32 value);
+
+  // int32 AntiCriticalTimes = 12;
+  void clear_anticriticaltimes();
+  static const int kAntiCriticalTimesFieldNumber = 12;
+  ::google::protobuf::int32 anticriticaltimes() const;
+  void set_anticriticaltimes(::google::protobuf::int32 value);
+
+  // int32 AntiCritical = 13;
+  void clear_anticritical();
+  static const int kAntiCriticalFieldNumber = 13;
+  ::google::protobuf::int32 anticritical() const;
+  void set_anticritical(::google::protobuf::int32 value);
+
+  // int32 Dodge = 14;
+  void clear_dodge();
+  static const int kDodgeFieldNumber = 14;
+  ::google::protobuf::int32 dodge() const;
+  void set_dodge(::google::protobuf::int32 value);
+
+  // int32 Hit = 15;
+  void clear_hit();
+  static const int kHitFieldNumber = 15;
+  ::google::protobuf::int32 hit() const;
+  void set_hit(::google::protobuf::int32 value);
+
+  // @@protoc_insertion_point(class_scope:message.W_C_ENTITY.Entity.StatsMask)
+ private:
+
+  ::google::protobuf::internal::InternalMetadataWithArena _internal_metadata_;
+  ::google::protobuf::int32 hp_;
+  ::google::protobuf::int32 mp_;
+  ::google::protobuf::int32 maxhp_;
+  ::google::protobuf::int32 maxmp_;
+  ::google::protobuf::int32 phydamage_;
+  ::google::protobuf::int32 phydefence_;
+  ::google::protobuf::int32 spldamage_;
+  ::google::protobuf::int32 spldefence_;
+  ::google::protobuf::int32 heal_;
+  ::google::protobuf::int32 criticaltimes_;
+  ::google::protobuf::int32 critical_;
+  ::google::protobuf::int32 anticriticaltimes_;
+  ::google::protobuf::int32 anticritical_;
+  ::google::protobuf::int32 dodge_;
+  ::google::protobuf::int32 hit_;
+  mutable int _cached_size_;
+  friend struct ::protobuf_game_2eproto::TableStruct;
+  friend void ::protobuf_game_2eproto::InitDefaultsW_C_ENTITY_Entity_StatsMaskImpl();
+};
+// -------------------------------------------------------------------
+
 class W_C_ENTITY_Entity : public ::google::protobuf::Message /* @@protoc_insertion_point(class_definition:message.W_C_ENTITY.Entity) */ {
  public:
   W_C_ENTITY_Entity();
@@ -954,7 +1151,7 @@ class W_C_ENTITY_Entity : public ::google::protobuf::Message /* @@protoc_inserti
                &_W_C_ENTITY_Entity_default_instance_);
   }
   static PROTOBUF_CONSTEXPR int const kIndexInFileMessages =
-    7;
+    8;
 
   void Swap(W_C_ENTITY_Entity* other);
   friend void swap(W_C_ENTITY_Entity& a, W_C_ENTITY_Entity& b) {
@@ -1001,6 +1198,7 @@ class W_C_ENTITY_Entity : public ::google::protobuf::Message /* @@protoc_inserti
 
   typedef W_C_ENTITY_Entity_DataMask DataMask;
   typedef W_C_ENTITY_Entity_MoveMask MoveMask;
+  typedef W_C_ENTITY_Entity_StatsMask StatsMask;
 
   // accessors -------------------------------------------------------
 
@@ -1022,6 +1220,15 @@ class W_C_ENTITY_Entity : public ::google::protobuf::Message /* @@protoc_inserti
   ::message::W_C_ENTITY_Entity_MoveMask* mutable_move();
   void set_allocated_move(::message::W_C_ENTITY_Entity_MoveMask* move);
 
+  // .message.W_C_ENTITY.Entity.StatsMask Stats = 4;
+  bool has_stats() const;
+  void clear_stats();
+  static const int kStatsFieldNumber = 4;
+  const ::message::W_C_ENTITY_Entity_StatsMask& stats() const;
+  ::message::W_C_ENTITY_Entity_StatsMask* release_stats();
+  ::message::W_C_ENTITY_Entity_StatsMask* mutable_stats();
+  void set_allocated_stats(::message::W_C_ENTITY_Entity_StatsMask* stats);
+
   // int64 Id = 1;
   void clear_id();
   static const int kIdFieldNumber = 1;
@@ -1034,6 +1241,7 @@ class W_C_ENTITY_Entity : public ::google::protobuf::Message /* @@protoc_inserti
   ::google::protobuf::internal::InternalMetadataWithArena _internal_metadata_;
   ::message::W_C_ENTITY_Entity_DataMask* data_;
   ::message::W_C_ENTITY_Entity_MoveMask* move_;
+  ::message::W_C_ENTITY_Entity_StatsMask* stats_;
   ::google::protobuf::int64 id_;
   mutable int _cached_size_;
   friend struct ::protobuf_game_2eproto::TableStruct;
@@ -1076,7 +1284,7 @@ class W_C_ENTITY : public ::google::protobuf::Message /* @@protoc_insertion_poin
                &_W_C_ENTITY_default_instance_);
   }
   static PROTOBUF_CONSTEXPR int const kIndexInFileMessages =
-    8;
+    9;
 
   void Swap(W_C_ENTITY* other);
   friend void swap(W_C_ENTITY& a, W_C_ENTITY& b) {
@@ -1193,7 +1401,7 @@ class W_C_DEL_SIMOBJ : public ::google::protobuf::Message /* @@protoc_insertion_
                &_W_C_DEL_SIMOBJ_default_instance_);
   }
   static PROTOBUF_CONSTEXPR int const kIndexInFileMessages =
-    9;
+    10;
 
   void Swap(W_C_DEL_SIMOBJ* other);
   friend void swap(W_C_DEL_SIMOBJ& a, W_C_DEL_SIMOBJ& b) {
@@ -1319,7 +1527,7 @@ class C_W_LoginCopyMap : public ::google::protobuf::Message /* @@protoc_insertio
                &_C_W_LoginCopyMap_default_instance_);
   }
   static PROTOBUF_CONSTEXPR int const kIndexInFileMessages =
-    10;
+    11;
 
   void Swap(C_W_LoginCopyMap* other);
   friend void swap(C_W_LoginCopyMap& a, C_W_LoginCopyMap& b) {
@@ -1920,6 +2128,220 @@ inline void W_C_ENTITY_Entity_MoveMask::set_rotation(float value) {
 
 // -------------------------------------------------------------------
 
+// W_C_ENTITY_Entity_StatsMask
+
+// int32 HP = 1;
+inline void W_C_ENTITY_Entity_StatsMask::clear_hp() {
+  hp_ = 0;
+}
+inline ::google::protobuf::int32 W_C_ENTITY_Entity_StatsMask::hp() const {
+  // @@protoc_insertion_point(field_get:message.W_C_ENTITY.Entity.StatsMask.HP)
+  return hp_;
+}
+inline void W_C_ENTITY_Entity_StatsMask::set_hp(::google::protobuf::int32 value) {
+  
+  hp_ = value;
+  // @@protoc_insertion_point(field_set:message.W_C_ENTITY.Entity.StatsMask.HP)
+}
+
+// int32 MP = 2;
+inline void W_C_ENTITY_Entity_StatsMask::clear_mp() {
+  mp_ = 0;
+}
+inline ::google::protobuf::int32 W_C_ENTITY_Entity_StatsMask::mp() const {
+  // @@protoc_insertion_point(field_get:message.W_C_ENTITY.Entity.StatsMask.MP)
+  return mp_;
+}
+inline void W_C_ENTITY_Entity_StatsMask::set_mp(::google::protobuf::int32 value) {
+  
+  mp_ = value;
+  // @@protoc_insertion_point(field_set:message.W_C_ENTITY.Entity.StatsMask.MP)
+}
+
+// int32 MaxHP = 3;
+inline void W_C_ENTITY_Entity_StatsMask::clear_maxhp() {
+  maxhp_ = 0;
+}
+inline ::google::protobuf::int32 W_C_ENTITY_Entity_StatsMask::maxhp() const {
+  // @@protoc_insertion_point(field_get:message.W_C_ENTITY.Entity.StatsMask.MaxHP)
+  return maxhp_;
+}
+inline void W_C_ENTITY_Entity_StatsMask::set_maxhp(::google::protobuf::int32 value) {
+  
+  maxhp_ = value;
+  // @@protoc_insertion_point(field_set:message.W_C_ENTITY.Entity.StatsMask.MaxHP)
+}
+
+// int32 MaxMP = 4;
+inline void W_C_ENTITY_Entity_StatsMask::clear_maxmp() {
+  maxmp_ = 0;
+}
+inline ::google::protobuf::int32 W_C_ENTITY_Entity_StatsMask::maxmp() const {
+  // @@protoc_insertion_point(field_get:message.W_C_ENTITY.Entity.StatsMask.MaxMP)
+  return maxmp_;
+}
+inline void W_C_ENTITY_Entity_StatsMask::set_maxmp(::google::protobuf::int32 value) {
+  
+  maxmp_ = value;
+  // @@protoc_insertion_point(field_set:message.W_C_ENTITY.Entity.StatsMask.MaxMP)
+}
+
+// int32 PhyDamage = 5;
+inline void W_C_ENTITY_Entity_StatsMask::clear_phydamage() {
+  phydamage_ = 0;
+}
+inline ::google::protobuf::int32 W_C_ENTITY_Entity_StatsMask::phydamage() const {
+  // @@protoc_insertion_point(field_get:message.W_C_ENTITY.Entity.StatsMask.PhyDamage)
+  return phydamage_;
+}
+inline void W_C_ENTITY_Entity_StatsMask::set_phydamage(::google::protobuf::int32 value) {
+  
+  phydamage_ = value;
+  // @@protoc_insertion_point(field_set:message.W_C_ENTITY.Entity.StatsMask.PhyDamage)
+}
+
+// int32 PhyDefence = 6;
+inline void W_C_ENTITY_Entity_StatsMask::clear_phydefence() {
+  phydefence_ = 0;
+}
+inline ::google::protobuf::int32 W_C_ENTITY_Entity_StatsMask::phydefence() const {
+  // @@protoc_insertion_point(field_get:message.W_C_ENTITY.Entity.StatsMask.PhyDefence)
+  return phydefence_;
+}
+inline void W_C_ENTITY_Entity_StatsMask::set_phydefence(::google::protobuf::int32 value) {
+  
+  phydefence_ = value;
+  // @@protoc_insertion_point(field_set:message.W_C_ENTITY.Entity.StatsMask.PhyDefence)
+}
+
+// int32 SplDamage = 7;
+inline void W_C_ENTITY_Entity_StatsMask::clear_spldamage() {
+  spldamage_ = 0;
+}
+inline ::google::protobuf::int32 W_C_ENTITY_Entity_StatsMask::spldamage() const {
+  // @@protoc_insertion_point(field_get:message.W_C_ENTITY.Entity.StatsMask.SplDamage)
+  return spldamage_;
+}
+inline void W_C_ENTITY_Entity_StatsMask::set_spldamage(::google::protobuf::int32 value) {
+  
+  spldamage_ = value;
+  // @@protoc_insertion_point(field_set:message.W_C_ENTITY.Entity.StatsMask.SplDamage)
+}
+
+// int32 SplDefence = 8;
+inline void W_C_ENTITY_Entity_StatsMask::clear_spldefence() {
+  spldefence_ = 0;
+}
+inline ::google::protobuf::int32 W_C_ENTITY_Entity_StatsMask::spldefence() const {
+  // @@protoc_insertion_point(field_get:message.W_C_ENTITY.Entity.StatsMask.SplDefence)
+  return spldefence_;
+}
+inline void W_C_ENTITY_Entity_StatsMask::set_spldefence(::google::protobuf::int32 value) {
+  
+  spldefence_ = value;
+  // @@protoc_insertion_point(field_set:message.W_C_ENTITY.Entity.StatsMask.SplDefence)
+}
+
+// int32 Heal = 9;
+inline void W_C_ENTITY_Entity_StatsMask::clear_heal() {
+  heal_ = 0;
+}
+inline ::google::protobuf::int32 W_C_ENTITY_Entity_StatsMask::heal() const {
+  // @@protoc_insertion_point(field_get:message.W_C_ENTITY.Entity.StatsMask.Heal)
+  return heal_;
+}
+inline void W_C_ENTITY_Entity_StatsMask::set_heal(::google::protobuf::int32 value) {
+  
+  heal_ = value;
+  // @@protoc_insertion_point(field_set:message.W_C_ENTITY.Entity.StatsMask.Heal)
+}
+
+// int32 CriticalTimes = 10;
+inline void W_C_ENTITY_Entity_StatsMask::clear_criticaltimes() {
+  criticaltimes_ = 0;
+}
+inline ::google::protobuf::int32 W_C_ENTITY_Entity_StatsMask::criticaltimes() const {
+  // @@protoc_insertion_point(field_get:message.W_C_ENTITY.Entity.StatsMask.CriticalTimes)
+  return criticaltimes_;
+}
+inline void W_C_ENTITY_Entity_StatsMask::set_criticaltimes(::google::protobuf::int32 value) {
+  
+  criticaltimes_ = value;
+  // @@protoc_insertion_point(field_set:message.W_C_ENTITY.Entity.StatsMask.CriticalTimes)
+}
+
+// int32 Critical = 11;
+inline void W_C_ENTITY_Entity_StatsMask::clear_critical() {
+  critical_ = 0;
+}
+inline ::google::protobuf::int32 W_C_ENTITY_Entity_StatsMask::critical() const {
+  // @@protoc_insertion_point(field_get:message.W_C_ENTITY.Entity.StatsMask.Critical)
+  return critical_;
+}
+inline void W_C_ENTITY_Entity_StatsMask::set_critical(::google::protobuf::int32 value) {
+  
+  critical_ = value;
+  // @@protoc_insertion_point(field_set:message.W_C_ENTITY.Entity.StatsMask.Critical)
+}
+
+// int32 AntiCriticalTimes = 12;
+inline void W_C_ENTITY_Entity_StatsMask::clear_anticriticaltimes() {
+  anticriticaltimes_ = 0;
+}
+inline ::google::protobuf::int32 W_C_ENTITY_Entity_StatsMask::anticriticaltimes() const {
+  // @@protoc_insertion_point(field_get:message.W_C_ENTITY.Entity.StatsMask.AntiCriticalTimes)
+  return anticriticaltimes_;
+}
+inline void W_C_ENTITY_Entity_StatsMask::set_anticriticaltimes(::google::protobuf::int32 value) {
+  
+  anticriticaltimes_ = value;
+  // @@protoc_insertion_point(field_set:message.W_C_ENTITY.Entity.StatsMask.AntiCriticalTimes)
+}
+
+// int32 AntiCritical = 13;
+inline void W_C_ENTITY_Entity_StatsMask::clear_anticritical() {
+  anticritical_ = 0;
+}
+inline ::google::protobuf::int32 W_C_ENTITY_Entity_StatsMask::anticritical() const {
+  // @@protoc_insertion_point(field_get:message.W_C_ENTITY.Entity.StatsMask.AntiCritical)
+  return anticritical_;
+}
+inline void W_C_ENTITY_Entity_StatsMask::set_anticritical(::google::protobuf::int32 value) {
+  
+  anticritical_ = value;
+  // @@protoc_insertion_point(field_set:message.W_C_ENTITY.Entity.StatsMask.AntiCritical)
+}
+
+// int32 Dodge = 14;
+inline void W_C_ENTITY_Entity_StatsMask::clear_dodge() {
+  dodge_ = 0;
+}
+inline ::google::protobuf::int32 W_C_ENTITY_Entity_StatsMask::dodge() const {
+  // @@protoc_insertion_point(field_get:message.W_C_ENTITY.Entity.StatsMask.Dodge)
+  return dodge_;
+}
+inline void W_C_ENTITY_Entity_StatsMask::set_dodge(::google::protobuf::int32 value) {
+  
+  dodge_ = value;
+  // @@protoc_insertion_point(field_set:message.W_C_ENTITY.Entity.StatsMask.Dodge)
+}
+
+// int32 Hit = 15;
+inline void W_C_ENTITY_Entity_StatsMask::clear_hit() {
+  hit_ = 0;
+}
+inline ::google::protobuf::int32 W_C_ENTITY_Entity_StatsMask::hit() const {
+  // @@protoc_insertion_point(field_get:message.W_C_ENTITY.Entity.StatsMask.Hit)
+  return hit_;
+}
+inline void W_C_ENTITY_Entity_StatsMask::set_hit(::google::protobuf::int32 value) {
+  
+  hit_ = value;
+  // @@protoc_insertion_point(field_set:message.W_C_ENTITY.Entity.StatsMask.Hit)
+}
+
+// -------------------------------------------------------------------
+
 // W_C_ENTITY_Entity
 
 // int64 Id = 1;
@@ -2034,6 +2456,56 @@ inline void W_C_ENTITY_Entity::set_allocated_move(::message::W_C_ENTITY_Entity_M
   }
   move_ = move;
   // @@protoc_insertion_point(field_set_allocated:message.W_C_ENTITY.Entity.Move)
+}
+
+// .message.W_C_ENTITY.Entity.StatsMask Stats = 4;
+inline bool W_C_ENTITY_Entity::has_stats() const {
+  return this != internal_default_instance() && stats_ != NULL;
+}
+inline void W_C_ENTITY_Entity::clear_stats() {
+  if (GetArenaNoVirtual() == NULL && stats_ != NULL) {
+    delete stats_;
+  }
+  stats_ = NULL;
+}
+inline const ::message::W_C_ENTITY_Entity_StatsMask& W_C_ENTITY_Entity::stats() const {
+  const ::message::W_C_ENTITY_Entity_StatsMask* p = stats_;
+  // @@protoc_insertion_point(field_get:message.W_C_ENTITY.Entity.Stats)
+  return p != NULL ? *p : *reinterpret_cast<const ::message::W_C_ENTITY_Entity_StatsMask*>(
+      &::message::_W_C_ENTITY_Entity_StatsMask_default_instance_);
+}
+inline ::message::W_C_ENTITY_Entity_StatsMask* W_C_ENTITY_Entity::release_stats() {
+  // @@protoc_insertion_point(field_release:message.W_C_ENTITY.Entity.Stats)
+  
+  ::message::W_C_ENTITY_Entity_StatsMask* temp = stats_;
+  stats_ = NULL;
+  return temp;
+}
+inline ::message::W_C_ENTITY_Entity_StatsMask* W_C_ENTITY_Entity::mutable_stats() {
+  
+  if (stats_ == NULL) {
+    stats_ = new ::message::W_C_ENTITY_Entity_StatsMask;
+  }
+  // @@protoc_insertion_point(field_mutable:message.W_C_ENTITY.Entity.Stats)
+  return stats_;
+}
+inline void W_C_ENTITY_Entity::set_allocated_stats(::message::W_C_ENTITY_Entity_StatsMask* stats) {
+  ::google::protobuf::Arena* message_arena = GetArenaNoVirtual();
+  if (message_arena == NULL) {
+    delete stats_;
+  }
+  if (stats) {
+    ::google::protobuf::Arena* submessage_arena = NULL;
+    if (message_arena != submessage_arena) {
+      stats = ::google::protobuf::internal::GetOwnedMessage(
+          message_arena, stats, submessage_arena);
+    }
+    
+  } else {
+    
+  }
+  stats_ = stats;
+  // @@protoc_insertion_point(field_set_allocated:message.W_C_ENTITY.Entity.Stats)
 }
 
 // -------------------------------------------------------------------
@@ -2305,6 +2777,8 @@ inline void C_W_LoginCopyMap::set_dataid(::google::protobuf::int32 value) {
 #ifdef __GNUC__
   #pragma GCC diagnostic pop
 #endif  // __GNUC__
+// -------------------------------------------------------------------
+
 // -------------------------------------------------------------------
 
 // -------------------------------------------------------------------

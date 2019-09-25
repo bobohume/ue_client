@@ -5,13 +5,11 @@
 #define PROTOBUF_message_2eproto__INCLUDED
 
 #include <string>
-
 #pragma warning(disable:4800)
 #pragma warning(disable:4125)
 #pragma warning(disable:4668)
 #pragma warning(disable:4647)
 #pragma warning(disable:4146)
-
 #include <google/protobuf/stubs/common.h>
 
 #if GOOGLE_PROTOBUF_VERSION < 3005000

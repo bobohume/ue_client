@@ -1,9 +1,10 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
 #pragma once
-
+#include <unordered_map>
 #include "CoreMinimal.h"
 #include "GameFramework/GameStateBase.h"
+#include "TEST2Character.h"
 #include "CGonetState.generated.h"
 
 /**
@@ -30,6 +31,10 @@ public:
 	//UFUNCTION(BlueprintCallable, Category = "C++ | NetWork")
 	//void UpdateTick();
 
-	//UFUNCTION(BlueprintImplementableEvent, Category = "C++ | Entity")
-	//APawn* SpawnPlayer();
+	UFUNCTION(BlueprintImplementableEvent, Category = "C++ | Entity")
+	APawn* SpawnPlayer(FVector pos, FRotator rotation);
+	std::unordered_map<int64, ATEST2Character*> EntityMap;
 };
+//调试变量不优化掉
+//#pragma optimize("",off) 
+//#pragma optimize("",on) 
