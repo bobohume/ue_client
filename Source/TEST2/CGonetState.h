@@ -4,19 +4,19 @@
 
 #include "CoreMinimal.h"
 #include "GameFramework/GameStateBase.h"
-#include "CGamePlayState.generated.h"
+#include "CGonetState.generated.h"
 
 /**
  * 
  */
 UCLASS()
-class TEST2_API ACGamePlayState : public AGameStateBase
+class TEST2_API ACGonetState : public AGameStateBase
 {
 	GENERATED_BODY()
 	
 public:
 	// Sets default values for this actor's properties
-	ACGamePlayState();
+	ACGonetState();
 
 protected:
 	// Called when the game starts or when spawned
