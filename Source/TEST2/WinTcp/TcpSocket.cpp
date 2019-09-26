@@ -90,7 +90,7 @@ void WinTcp::CTcpSocket::ReceivePacket(const char *pInData, int nInDataSize)
 		return;				//有错误
 	}
 
-	auto nCurSize = 0;
+	int nCurSize = 0;
 	memcpy(&m_pInBuffer[m_nHalfSize], pInData, nInDataSize);
 	m_nHalfSize += nInDataSize;
 	m_pInBuffer[m_nHalfSize] = '\0';
