@@ -59,6 +59,7 @@ FindStr:
 	if (pSubData != NULL) {
 		for (int i = 1; i < nFindDataSize; i++) {
 			if (pSubData[i] != pFindData[i]) {
+				pSubData++;
 				pData = (char *)pSubData;
 				nDataSize -= pSubData - pInData;
 				goto FindStr;
@@ -92,6 +93,7 @@ void WinTcp::CTcpSocket::ReceivePacket(const char *pInData, int nInDataSize)
 	auto nCurSize = 0;
 	memcpy(&m_pInBuffer[m_nHalfSize], pInData, nInDataSize);
 	m_nHalfSize += nInDataSize;
+	m_pInBuffer[m_nHalfSize] = '\0';
 
 ParsePacekt:
 	int nPacketSize = 0;
@@ -109,7 +111,10 @@ ParsePacekt:
 			goto ParsePacekt;
 		}
 	}
-	else if (nBufferSize < m_MaxReceiveBufferSize) {
+	else if (nBufferSize < 1024) {
+		memmove(m_pInBuffer, &m_pInBuffer[nCurSize], m_nHalfSize - nCurSize);
+		m_pInBuffer[m_nHalfSize - nCurSize] = '\0';
+		m_nHalfSize = m_nHalfSize - nCurSize;
 	}
 	else {
 		CCLOG("超出最大包限制，丢弃该包");
