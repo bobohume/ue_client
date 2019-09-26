@@ -2,6 +2,7 @@
 #include "message/Packet.h"
 #include "message/game.pb.h"
 #include "Runtime/Engine/Classes/Kismet/GameplayStatics.h"
+#include "Runtime/Engine/Classes/Engine/World.h"
 #include "TEST2Character.h"
 
 using namespace message;
@@ -17,8 +18,8 @@ bool Player::_W_C_LoginMap(::google::protobuf::Message* _packet) {
 	}
 
 
-	ACharacter* pController = UGameplayStatics::GetPlayerCharacter(GWorld, 0);
-	ATEST2Character* pPlayerController = Cast<ATEST2Character>(pController);
+	ACharacter* pCharacter = UGameplayStatics::GetPlayerCharacter(GWorld, 0);
+	ATEST2Character* pPlayerController = Cast<ATEST2Character>(pCharacter);
 	pPlayerController->Id = packet->id();
 	packet->id();
 	packet->pos();
