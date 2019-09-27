@@ -3,7 +3,7 @@
 #include "message/game.pb.h"
 #include "Runtime/Engine/Classes/Engine/World.h"
 #include "Runtime/Engine/Classes/Kismet/GameplayStatics.h"
-#include "Runtime/AIModule/Classes/AIController.h"
+#include "Runtime/Engine/Classes/AI/NavigationSystemBase.h"
 #include "TEST2Character.h"
 #include "CGonetState.h"
 #include "WinTcp/Account.h"
@@ -15,6 +15,7 @@ EntityMgr::EntityMgr()
 	REGISTER_PACKET(new W_C_ENTITY(), std::bind(&EntityMgr::_W_C_ENTITY, this, std::placeholders::_1));
 }
 
+#pragma optimize("",off) 
 bool EntityMgr::_W_C_ENTITY(::google::protobuf::Message* _packet) {
 	auto packet = (W_C_ENTITY*)(_packet);
 	if (!packet) {
@@ -34,9 +35,9 @@ bool EntityMgr::_W_C_ENTITY(::google::protobuf::Message* _packet) {
 		}else if (itr == EntityMap.end()) {//创建实体
 			FVector pos = FVector(0, 0, 250);
 			if (entityInfo.has_move()) {
-				pos = FVector(entityInfo.move().pos().x(), entityInfo.move().pos().y(), entityInfo.move().pos().z());
+				//pos = FVector(entityInfo.move().pos().x(), entityInfo.move().pos().y(), entityInfo.move().pos().z());
 			}
-			pEntity = Cast<ATEST2Character>(pGonetState->SpawnPlayer(FVector(0, 0, 250), FRotator(0)));
+			pEntity = Cast<ATEST2Character>(pGonetState->SpawnPlayer(pos, FRotator(0)));
 		}else {
 			pEntity = itr->second;
 		}
@@ -55,17 +56,11 @@ bool EntityMgr::_W_C_ENTITY(::google::protobuf::Message* _packet) {
 		}
 
 		if (entityInfo.has_move()) {
-			FTransform Dest;
-			Dest.SetLocation(FVector(entityInfo.move().pos().x(), entityInfo.move().pos().y(), entityInfo.move().pos().z()));
-			FTransform Source = pEntity->GetTransform();
-			FTransform Transform;
-			Transform.LerpTranslationScale3D(Source, Dest, ScalarRegister(0.1f));
-			auto pAI = Cast<AAIController>(pEntity->AIControllerClass);
-			if (pAI != NULL) {
-				pAI->MoveToLocation(FVector(entityInfo.move().pos().x(), entityInfo.move().pos().y(), entityInfo.move().pos().z()));
+			if (Id == WinTcp::ACCOUNT->m_AccountId) {
+				UE_LOG(LogClass, Log, TEXT("server move [%f] [%f] [%f]"), entityInfo.move().pos().y(), entityInfo.move().pos().x(), entityInfo.move().pos().z());
+			}else {
+				pEntity->MoveTo(FVector(entityInfo.move().pos().y(), entityInfo.move().pos().x(), entityInfo.move().pos().z()));
 			}
-			//pEntity->SetActorTransform(Transform);
-			//pEntity->SetActorLocation(FVector(entityInfo.move().pos().x(), entityInfo.move().pos().y(), entityInfo.move().pos().z()));
 		}
 
 		EntityMap[Id] = pEntity;
@@ -74,6 +69,7 @@ bool EntityMgr::_W_C_ENTITY(::google::protobuf::Message* _packet) {
 
 	return true;
 }
+#pragma optimize("", on)
 
 //void AShooterBot::FaceRotation(FRotator NewRotation, float DeltaTime)
 //{

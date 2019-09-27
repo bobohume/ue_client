@@ -21,9 +21,9 @@ bool Player::_W_C_LoginMap(::google::protobuf::Message* _packet) {
 	ACharacter* pCharacter = UGameplayStatics::GetPlayerCharacter(GWorld, 0);
 	ATEST2Character* pPlayerController = Cast<ATEST2Character>(pCharacter);
 	pPlayerController->Id = packet->id();
-	packet->id();
-	packet->pos();
-	packet->rotation();
+	FTransform Transform;
+	Transform.SetLocation(FVector(packet->pos().y(), packet->pos().x(), packet->pos().z()));
+	pPlayerController->SetActorTransform(Transform);
 
 	return true;
 }

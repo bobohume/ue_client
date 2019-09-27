@@ -8,6 +8,12 @@
 #include "GameFramework/CharacterMovementComponent.h"
 #include "GameFramework/Controller.h"
 #include "GameFramework/SpringArmComponent.h"
+#include "message/game.pb.h"
+#include "WinTcp/ClientSocket.h"
+#include "WinTcp/Account.h"
+
+using namespace WinTcp;
+using namespace message;
 
 //////////////////////////////////////////////////////////////////////////
 // ATEST2Character
@@ -115,6 +121,7 @@ void ATEST2Character::MoveForward(float Value)
 		// get forward vector
 		const FVector Direction = FRotationMatrix(YawRotation).GetUnitAxis(EAxis::X);
 		AddMovementInput(Direction, Value);
+		MovePacket(GetActorLocation(), FMath::DegreesToRadians(Rotation.Yaw), GetWorld()->GetDeltaSeconds());
 	}
 }
 
@@ -130,5 +137,22 @@ void ATEST2Character::MoveRight(float Value)
 		const FVector Direction = FRotationMatrix(YawRotation).GetUnitAxis(EAxis::Y);
 		// add movement in that direction
 		AddMovementInput(Direction, Value);
+		MovePacket(GetActorLocation(), FMath::DegreesToRadians(Rotation.Yaw), GetWorld()->GetDeltaSeconds());
 	}
+}
+
+void ATEST2Character::MovePacket(FVector location, float yaw, float duration){
+	auto packet = new C_W_Move();
+	auto packetHead = packet->mutable_packethead();
+	Packet::BuildPacketHead(packetHead, Id);
+	auto move = packet->mutable_move();
+	move->set_mode(0);
+	auto normal = move->mutable_normal();
+	auto pos = normal->mutable_pos();
+	pos->set_x(location.Y);
+	pos->set_y(location.X);
+	pos->set_z(location.Z);
+	normal->set_yaw(yaw);
+	normal->set_duration(duration);
+	ClientSocket::Instance()->Send(packet);
 }

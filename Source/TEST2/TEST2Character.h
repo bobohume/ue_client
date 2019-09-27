@@ -33,6 +33,9 @@ public:
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category =Entity)
 	int64 Id;
 
+	UFUNCTION(BlueprintImplementableEvent, Category = "Gonet | Entity")
+	void MoveTo(FVector pos);
+
 protected:
 
 	/** Resets HMD orientation in VR. */
@@ -72,5 +75,7 @@ public:
 	FORCEINLINE class USpringArmComponent* GetCameraBoom() const { return CameraBoom; }
 	/** Returns FollowCamera subobject **/
 	FORCEINLINE class UCameraComponent* GetFollowCamera() const { return FollowCamera; }
+private:
+	void MovePacket(FVector location, float yaw, float duration);
 };
 

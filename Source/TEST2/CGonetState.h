@@ -31,7 +31,7 @@ public:
 	//UFUNCTION(BlueprintCallable, Category = "C++ | NetWork")
 	//void UpdateTick();
 
-	UFUNCTION(BlueprintImplementableEvent, Category = "C++ | Entity")
+	UFUNCTION(BlueprintImplementableEvent, Category = "Gonet | Entity")
 	APawn* SpawnPlayer(FVector pos, FRotator rotation);
 	std::unordered_map<int64, ATEST2Character*> EntityMap;
 };
