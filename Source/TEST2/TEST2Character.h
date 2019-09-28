@@ -77,5 +77,6 @@ public:
 	FORCEINLINE class UCameraComponent* GetFollowCamera() const { return FollowCamera; }
 private:
 	void MovePacket(FVector location, float yaw, float duration);
+    float m_fMoveTick;
 };
 

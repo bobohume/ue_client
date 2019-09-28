@@ -117,11 +117,10 @@ void ATEST2Character::MoveForward(float Value)
 		// find out which way is forward
 		const FRotator Rotation = Controller->GetControlRotation();
 		const FRotator YawRotation(0, Rotation.Yaw, 0);
-
 		// get forward vector
 		const FVector Direction = FRotationMatrix(YawRotation).GetUnitAxis(EAxis::X);
 		AddMovementInput(Direction, Value);
-		MovePacket(GetActorLocation(), FMath::DegreesToRadians(Rotation.Yaw), GetWorld()->GetDeltaSeconds());
+        MovePacket(GetActorLocation(), FMath::DegreesToRadians(Rotation.Yaw)+FMath::Acos(Value), 100);
 	}
 }
 
@@ -132,16 +131,20 @@ void ATEST2Character::MoveRight(float Value)
 		// find out which way is right
 		const FRotator Rotation = Controller->GetControlRotation();
 		const FRotator YawRotation(0, Rotation.Yaw, 0);
-	
 		// get right vector 
 		const FVector Direction = FRotationMatrix(YawRotation).GetUnitAxis(EAxis::Y);
 		// add movement in that direction
 		AddMovementInput(Direction, Value);
-		MovePacket(GetActorLocation(), FMath::DegreesToRadians(Rotation.Yaw), GetWorld()->GetDeltaSeconds());
+		MovePacket(GetActorLocation(), FMath::DegreesToRadians(Rotation.Yaw) +   FMath::Asin(Value), 100);
 	}
 }
 
 void ATEST2Character::MovePacket(FVector location, float yaw, float duration){
+    if(GetWorld()->TimeSince(m_fMoveTick) < 0.1){
+        return;
+    }
+    
+    m_fMoveTick = GetWorld()->GetTimeSeconds();
 	auto packet = new C_W_Move();
 	auto packetHead = packet->mutable_packethead();
 	Packet::BuildPacketHead(packetHead, Id);

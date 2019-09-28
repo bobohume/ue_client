@@ -30,3 +30,4 @@ void ACGonetState::Tick(float DeltaTime)
 	Super::Tick(DeltaTime);
 	WinTcp::CLIENT_TCP->update(0);
 }
+
