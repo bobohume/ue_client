@@ -32,6 +32,7 @@ void WinTcp::CTcpSocket::OnClear()
 	m_nHalfSize			= 0;			//初始化变量
 }
 
+#pragma optimize("",off) 
 void WinTcp::CTcpSocket::HandlePacket(const char* pInData, int nBufferSize)
 {
 #ifdef DEBUG
@@ -39,7 +40,7 @@ void WinTcp::CTcpSocket::HandlePacket(const char* pInData, int nBufferSize)
 	uReceves++;
 	CCLOG(">>>>>>>OnHandleAPacket receive packet %d\n", uReceves);
 #endif
-	char buff[PACKET_MAX_SIZE] = "";
+	static char buff[MAX_PACKET_RECEIEVE_SIZE] = "";
 	memcpy(buff, pInData, nBufferSize);
 	int id = message::Packet::Instance()->Decode(buff);
 	auto packet = message::Packet::Instance()->GetPakcet(id);
@@ -59,9 +60,12 @@ FindStr:
 	if (pSubData != NULL) {
 		for (int i = 1; i < nFindDataSize; i++) {
 			if (pSubData[i] != pFindData[i]) {
-				pSubData++;
+				pSubData++;//可能是最后一个字节
 				pData = (char *)pSubData;
 				nDataSize -= pSubData - pInData;
+				if (nDataSize <= 0) {
+					return -1;
+				}
 				goto FindStr;
 			}
 		}
@@ -99,7 +103,7 @@ ParsePacekt:
 	int nPacketSize = 0;
 	int nBufferSize = m_nHalfSize - nCurSize;
 	bool bFindFlag = false;
-	seekToTcpEnd(&m_pInBuffer[nCurSize], m_nHalfSize, bFindFlag, nPacketSize);
+	seekToTcpEnd(&m_pInBuffer[nCurSize], nBufferSize, bFindFlag, nPacketSize);
 	if (bFindFlag) {
 		if (nBufferSize == nPacketSize) {		//完整包
 			HandlePacket(m_pInBuffer, nPacketSize - TCP_END_LENGTH);
@@ -121,3 +125,4 @@ ParsePacekt:
 		m_nHalfSize = 0;
 	}
 }
+#pragma optimize("",on) 
