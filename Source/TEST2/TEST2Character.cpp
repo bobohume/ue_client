@@ -160,7 +160,6 @@ void ATEST2Character::Tick(float DeltaTime)
 		}else {
 			yaw = FMath::Asin(m_Yval);
 		}
-		UE_LOG(LogClass, Log, TEXT("[%f] [%f]"), yaw, FMath::DegreesToRadians(Rotation.Yaw));
 		MovePacket(GetActorLocation(), yaw + FMath::DegreesToRadians(Rotation.Yaw), 100);
 		m_bMove = false;
 		m_Xval = 0;

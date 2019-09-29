@@ -35,7 +35,7 @@ bool EntityMgr::_W_C_ENTITY(::google::protobuf::Message* _packet) {
 		}else if (itr == EntityMap.end()) {//创建实体
 			FVector pos = FVector(0, 0, 250);
 			if (entityInfo.has_move()) {
-				//pos = FVector(entityInfo.move().pos().x(), entityInfo.move().pos().y(), entityInfo.move().pos().z());
+				pos = FVector(entityInfo.move().pos().y(), entityInfo.move().pos().x(), entityInfo.move().pos().z());
 			}
 			pEntity = Cast<ATEST2Character>(pGonetState->SpawnPlayer(pos, FRotator(0)));
 		}else {
@@ -56,10 +56,16 @@ bool EntityMgr::_W_C_ENTITY(::google::protobuf::Message* _packet) {
 		}
 
 		if (entityInfo.has_move()) {
+			FVector pos = FVector(entityInfo.move().pos().y(), entityInfo.move().pos().x(), entityInfo.move().pos().z());
 			if (Id == WinTcp::ACCOUNT->m_AccountId) {
-				UE_LOG(LogClass, Log, TEXT("server move [%f] [%f] [%f]"), entityInfo.move().pos().y(), entityInfo.move().pos().x(), entityInfo.move().pos().z());
+				UE_LOG(LogClass, Log, TEXT("server move [%f] [%f] [%f]"), pos.X, pos.Y, pos.Z);
+				FVector pos1 = pEntity->GetActorLocation();
+				pos1 -= pos;
+				if (FMath::Abs(pos1.X) > 120 || FMath::Abs(pos1.Y) > 120) {
+					pEntity->SetActorLocation(pos);
+				}
 			}else {
-				pEntity->MoveTo(FVector(entityInfo.move().pos().y(), entityInfo.move().pos().x(), entityInfo.move().pos().z()));
+				pEntity->MoveTo(pos);
 			}
 		}
 
