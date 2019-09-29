@@ -27,17 +27,17 @@ bool EntityMgr::_W_C_ENTITY(::google::protobuf::Message* _packet) {
 	for (auto i = 0; i < packet->entityinfo_size(); i++) {
 		auto entityInfo = packet->entityinfo(i);
 		auto Id = entityInfo.id();
-		ATEST2Character* pEntity = NULL;
+		ACGameObjectCharacter* pEntity = NULL;
 		auto itr = EntityMap.find(Id);
 		if (Id == WinTcp::ACCOUNT->m_AccountId) {
 			ACharacter* pCharacter = UGameplayStatics::GetPlayerCharacter(GWorld, 0);
-			pEntity = Cast<ATEST2Character>(pCharacter);
+			pEntity = Cast<ACGameObjectCharacter>(pCharacter);
 		}else if (itr == EntityMap.end()) {//创建实体
 			FVector pos = FVector(0, 0, 250);
 			if (entityInfo.has_move()) {
 				pos = FVector(entityInfo.move().pos().y(), entityInfo.move().pos().x(), entityInfo.move().pos().z());
 			}
-			pEntity = Cast<ATEST2Character>(pGonetState->SpawnPlayer(pos, FRotator(0)));
+			pEntity = Cast<ACGameObjectCharacter>(pGonetState->SpawnPlayer(pos, FRotator(0)));
 		}else {
 			pEntity = itr->second;
 		}

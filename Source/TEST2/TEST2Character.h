@@ -4,10 +4,11 @@
 
 #include "CoreMinimal.h"
 #include "GameFramework/Character.h"
+#include "GameObject/CGameObjectCharacter.h"
 #include "TEST2Character.generated.h"
 
 UCLASS(config=Game)
-class ATEST2Character : public ACharacter
+class ATEST2Character : public ACGameObjectCharacter
 {
 	GENERATED_BODY()
 
@@ -28,14 +29,6 @@ public:
 	/** Base look up/down rate, in deg/sec. Other scaling may affect final rate. */
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category=Camera)
 	float BaseLookUpRate;
-
-
-	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category =Entity)
-	int64 Id;
-
-	UFUNCTION(BlueprintImplementableEvent, Category = "Gonet | Entity")
-	void MoveTo(FVector pos);
-
 protected:
 
 	/** Resets HMD orientation in VR. */
