@@ -52,6 +52,7 @@ bool EntityMgr::_W_C_ENTITY(::google::protobuf::Message* _packet) {
 			if (entityInfo.data().removeflag()) {
 				pEntity->Destroy();
 				EntityMap.erase(Id);
+				continue;
 			}
 		}
 
