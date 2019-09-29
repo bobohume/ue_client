@@ -60,12 +60,9 @@ FindStr:
 	if (pSubData != NULL) {
 		for (int i = 1; i < nFindDataSize; i++) {
 			if (pSubData[i] != pFindData[i]) {
-				pSubData++;//可能是最后一个字节
+				pSubData++;
+				nDataSize -= pSubData - pData;
 				pData = (char *)pSubData;
-				nDataSize -= pSubData - pInData;
-				if (nDataSize <= 0) {
-					return -1;
-				}
 				goto FindStr;
 			}
 		}
