@@ -51,6 +51,10 @@ ATEST2Character::ATEST2Character()
 
 	// Note: The skeletal mesh and anim blueprint references on the Mesh component (inherited from Character) 
 	// are set in the derived blueprint asset named MyCharacter (to avoid direct content references in C++)
+	m_fMoveTick = 0;
+	m_Xval = 0;
+	m_Yval = 0;
+	m_bMove = false;
 }
 
 //////////////////////////////////////////////////////////////////////////
@@ -120,7 +124,8 @@ void ATEST2Character::MoveForward(float Value)
 		// get forward vector
 		const FVector Direction = FRotationMatrix(YawRotation).GetUnitAxis(EAxis::X);
 		AddMovementInput(Direction, Value);
-        MovePacket(GetActorLocation(), FMath::DegreesToRadians(Rotation.Yaw)+FMath::Acos(Value), 100);
+		m_Xval = Value;
+		m_bMove = true;
 	}
 }
 
@@ -135,15 +140,38 @@ void ATEST2Character::MoveRight(float Value)
 		const FVector Direction = FRotationMatrix(YawRotation).GetUnitAxis(EAxis::Y);
 		// add movement in that direction
 		AddMovementInput(Direction, Value);
-		MovePacket(GetActorLocation(), FMath::DegreesToRadians(Rotation.Yaw) +   FMath::Asin(Value), 100);
+		m_Yval = Value;
+		m_bMove = true;
+	}
+}
+
+// Called every frame
+void ATEST2Character::Tick(float DeltaTime)
+{
+	Super::Tick(DeltaTime);
+	if (m_bMove) {
+		const FRotator Rotation = Controller->GetControlRotation();
+		float xval = FMath::Acos(m_Xval), yval = FMath::Asin(m_Yval);
+		float yaw = 0;
+		if (m_Xval != 0 && m_Yval != 0) {
+			yaw = (FMath::Acos(m_Xval)+ FMath::Asin(m_Yval)) /2;
+		}else if (m_Xval != 0) {
+			yaw = FMath::Acos(m_Xval);
+		}else {
+			yaw = FMath::Asin(m_Yval);
+		}
+		UE_LOG(LogClass, Log, TEXT("[%f] [%f]"), yaw, FMath::DegreesToRadians(Rotation.Yaw));
+		MovePacket(GetActorLocation(), yaw + FMath::DegreesToRadians(Rotation.Yaw), 100);
+		m_bMove = false;
+		m_Xval = 0;
+		m_Yval = 0;
 	}
 }
 
 void ATEST2Character::MovePacket(FVector location, float yaw, float duration){
     if(GetWorld()->TimeSince(m_fMoveTick) < 0.1){
         return;
-    }
-    
+	}   
     m_fMoveTick = GetWorld()->GetTimeSeconds();
 	auto packet = new C_W_Move();
 	auto packetHead = packet->mutable_packethead();

@@ -65,6 +65,9 @@ protected:
 	/** Handler for when a touch input stops. */
 	void TouchStopped(ETouchIndex::Type FingerIndex, FVector Location);
 
+	// Called every frame
+	virtual void Tick(float DeltaTime) override;
+
 protected:
 	// APawn interface
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
@@ -77,6 +80,10 @@ public:
 	FORCEINLINE class UCameraComponent* GetFollowCamera() const { return FollowCamera; }
 private:
 	void MovePacket(FVector location, float yaw, float duration);
+
     float m_fMoveTick;
+	float m_Xval;
+	float m_Yval;
+	bool m_bMove;
 };
 
