@@ -4,7 +4,8 @@
 #ifdef _WIN32
 #include <windows.h>
 #else
-#include <sched.h>
+//#include <sched.h>
+#include <unistd.h>
 #endif
 
 #ifdef _WINSOCKAPI_
@@ -112,9 +113,11 @@ bool WinTcp::ClientSocket::Loop(){
 		}
 
 #ifdef _WIN32
-		Sleep(0);
+		//Sleep(0);
+		Sleep(1);
 #else  // POSIX
-		sched_yield();
+		//sched_yield();
+		usleep(1*1000);
 #endif
 	}
 	
