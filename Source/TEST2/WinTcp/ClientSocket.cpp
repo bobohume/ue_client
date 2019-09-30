@@ -121,7 +121,6 @@ bool WinTcp::ClientSocket::Loop(){
 	return true;
 }
 
-#pragma optimize("",off) 
 void WinTcp::ClientSocket::update(float dt)
 {
 	auto packet = m_PacketQueue.PopPacket();
@@ -131,7 +130,6 @@ void WinTcp::ClientSocket::update(float dt)
 		packet = m_PacketQueue.PopPacket();
 	}
 }
-#pragma optimize("",on) 
 
 void WinTcp::ClientSocket::Release(void)
 {
