@@ -179,20 +179,6 @@ void WinTcp::ClientSocket::ReceivePacket(const char* buffer, int bufferLen)
     CTcpSocket::ReceivePacket(buffer, bufferLen);
 }
 
-
-#ifdef _WIN32
-DWORD WINAPI WinTcp::ClientSocket::_ConnectThread(LPVOID data)
-{
-	return 0;
-}
-#else
-void* WinTcp::ClientSocket::_ConnectThread(void* data)
-{
-	pthread_exit(NULL);
-	return 0;
-}
-#endif
-
 bool WinTcp::ClientSocket::Select(void)
 {
 	if (!m_Socket.isValid())

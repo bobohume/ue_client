@@ -52,17 +52,6 @@ public:
 	virtual         void			Close(void);
 
 protected:
-#ifdef _WIN32
-	static DWORD WINAPI	 _ConnectThread(LPVOID data);
-#else
-	static void*	_ConnectThread(void *data);
-#endif
-
-#ifdef _WIN32
-	HANDLE				m_hConnectThread;
-#else
-	pthread_t			m_hConnectThread;
-#endif
 	bool				Select(void);
 	bool				ProcessExcept(void);
 	bool				ProcessInput(void);
