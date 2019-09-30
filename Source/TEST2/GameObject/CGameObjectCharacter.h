@@ -26,9 +26,11 @@ public:
 	// Called to bind functionality to input
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
 
+	// Entity Id
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Entity)
 	int64 Id;
 
+	// Entity move
 	UFUNCTION(BlueprintImplementableEvent, Category = "Gonet | Entity")
 	void MoveTo(FVector pos);
 };
