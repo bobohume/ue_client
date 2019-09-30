@@ -9,7 +9,7 @@ ACGonetState::ACGonetState()
 {
 	// Set this actor to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = true;
-	WinTcp::CLIENT_TCP->Initial(0);
+	WinTcp::CLIENT_TCP->Initialize();
 	WinTcp::ACCOUNT;
 	ENTITYMGR;
 	PLAYER;
@@ -19,8 +19,8 @@ ACGonetState::ACGonetState()
 void ACGonetState::BeginPlay()
 {
 	Super::BeginPlay();
-	WinTcp::DisconnectServer();
-	WinTcp::ConnectServer("127.0.0.1", 31700);
+	WinTcp::CLIENT_TCP->Disconnect();
+	WinTcp::CLIENT_TCP->Connect("127.0.0.1", 31700);
 	EntityMap.clear();
 }
 

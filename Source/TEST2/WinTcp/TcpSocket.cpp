@@ -35,11 +35,6 @@ void WinTcp::CTcpSocket::OnClear()
 #pragma optimize("",off) 
 void WinTcp::CTcpSocket::HandlePacket(const char* pInData, int nBufferSize)
 {
-#ifdef DEBUG
-	static unsigned long uReceves = 0;
-	uReceves++;
-	CCLOG(">>>>>>>OnHandleAPacket receive packet %d\n", uReceves);
-#endif
 	static char buff[MAX_PACKET_RECEIEVE_SIZE] = "";
 	memcpy(buff, pInData, nBufferSize);
 	int id = message::Packet::Instance()->Decode(buff);
