@@ -40,6 +40,5 @@ namespace message
 	private:
 		std::mutex m_queueMutex;
 		std::queue<::google::protobuf::Message*> m_queue;
-		//Base::Vector<::google::protobuf::Message*> m_queue;
 	};
 }

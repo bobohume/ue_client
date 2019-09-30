@@ -41,9 +41,10 @@ void WinTcp::CTcpSocket::HandlePacket(const char* pInData, int nBufferSize)
 	auto packet = message::Packet::Instance()->GetPakcet(id);
 	if (packet) {
 		if (packet->ParseFromArray(&buff[4], nBufferSize - 4)) {
-			message::Packet::Instance()->TriggerPacket(packet);
+			m_PacketQueue.PushPacket(packet);
+			//message::Packet::Instance()->TriggerPacket(packet);
 		}
-		delete packet;
+		//delete packet;
 	}
 }
 

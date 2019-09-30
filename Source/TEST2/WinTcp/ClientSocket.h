@@ -13,60 +13,73 @@
 #include "pthread.h"
 #endif
 
-//#define MAX_PACKET_SIZE                 2048
-
 namespace WinTcp{
-#define MAX_VERTIFY_CACHE_PACKET        10
-#define MAX_CACHE_PACKET                30
-class ClientSocket : public CTcpSocket
-{
-public:
-	ClientSocket();
-	virtual ~ClientSocket();
-
-	static ClientSocket* Instance(void)
+	#define MAX_VERTIFY_CACHE_PACKET        10
+	#define MAX_CACHE_PACKET                30
+	class ClientSocket : public CTcpSocket
 	{
-		static ClientSocket local;
-		return &local;
-	}
+	public:
+		ClientSocket();
+		virtual ~ClientSocket();
 
-	//CTcpSocket 废弃接口=============================
-	bool Initialize();
-	bool Start() { return false; };
-	bool Stop() { return false; };
-	bool Restart() { return false; };
-	int  Connect(const char* szServerAddr, int nServerPort);
-	bool Disconnect();
-	bool Send(::google::protobuf::Message* packet);
-	bool Send(const char* buffer, int bufferLen);
+		static ClientSocket* Instance(void)
+		{
+			static ClientSocket local;
+			return &local;
+		}
 
-protected:
-	void OnDisconnect();
-	void OnConnect(int) { return; };
-	virtual void ReceivePacket(const char *pBuf, int nBufferSize);
+		//CTcpSocket 废弃接口=============================
+		bool Initialize();
+		bool Start();
+		bool Stop();
+		bool Restart() { return false; };
+		int  Connect(const char* szServerAddr, int nServerPort);
+		bool Send(::google::protobuf::Message* packet);
+		bool Send(const char* buffer, int bufferLen);
+		bool Disconnect();
+		bool Loop();
 
-public:
-	virtual void	update(float dt);
-	virtual void	Release(void);
-	void OnConnected();
-	virtual         void			Close(void);
+	protected:
+		void OnDisconnect();
+		void OnConnect(int) { return; };
+		virtual void ReceivePacket(const char *pBuf, int nBufferSize);
 
-protected:
-	bool				Select(void);
-	bool				ProcessExcept(void);
-	bool				ProcessInput(void);
-	bool				ProcessOutput(void);
-protected:
-	fd_set				m_ReadFD;
-	fd_set				m_WriteFD;
-	fd_set				m_ExceptFD;
-	///SOCKET
-	Socket				m_Socket;
-	bool				m_isConnecting;
-	bool                m_sendConnected;
-	bool				m_isConnected;
-	bool				m_isDisConnected;
-};
+	public:
+		virtual void	update(float dt);
+		virtual void	Release(void);
+		void OnConnected();
+		virtual         void			Close(void);
+
+	private:
+		bool				Select(void);
+		bool				ProcessExcept(void);
+		bool				ProcessInput(void);
+		bool				ProcessOutput(void);
+
+	private:
+		fd_set				m_ReadFD;
+		fd_set				m_WriteFD;
+		fd_set				m_ExceptFD;
+		///SOCKET
+		Socket				m_Socket;
+		bool				m_isConnecting;
+		bool                m_sendConnected;
+		bool				m_isConnected;
+		bool				m_isDisConnected;
+
+
+#ifdef _WIN32
+		static DWORD WINAPI	 _LoopThread(LPVOID data);
+#else
+		static void*	_LoopThread(void *data);
+#endif
+
+#ifdef _WIN32
+		HANDLE				m_hLoopThread;
+#else
+		pthread_t			m_hLoopThread;
+#endif
+	};
 
 #define  CLIENT_TCP ClientSocket::Instance()
 }

@@ -1,6 +1,12 @@
 #include "ClientSocket.h"
 #include "Base/MemGuard.h"
 #include "Account.h"
+#ifdef _WIN32
+#include <windows.h>
+#else
+#include <sched.h>
+#endif
+
 #ifdef _WINSOCKAPI_
 #pragma comment(lib, "Ws2_32.lib")
 //#pragma comment(lib, "pthreadVCE2.lib")
@@ -39,50 +45,93 @@ bool WinTcp::ClientSocket::Initialize()
 	//CCDirector::sharedDirector()->getScheduler()->scheduleUpdateForTarget(this,0,0);
 }
 
+bool WinTcp::ClientSocket::Start() 
+{
+#ifdef _WIN32
+	m_hLoopThread = CreateThread(NULL, 0, _LoopThread, NULL, 0, NULL);
+#else
+	pthread_create(&m_hLoopThread, NULL, _LoopThread, NULL);
+	pthread_detach(m_hLoopThread);
+#endif
+	return true;
+}
+
+bool WinTcp::ClientSocket::Stop() 
+{
+#ifdef _WIN32
+	TerminateThread(m_hLoopThread, 0);
+#else
+	pthread_cancel(m_hLoopThread);
+#endif
+	return true;
+}
+
 bool  WinTcp::ClientSocket::Disconnect()
 {
+	Stop();
 	Close();
 	return true;
 }
 
+bool WinTcp::ClientSocket::Loop(){
+	while (true) {
+		if (!m_Socket.isValid())
+		{
+			if (m_isConnected)
+			{
+				OnDisconnect();
+			}
+
+			if (g_connectResult < 0)
+			{
+				//OnDisconnect();
+				g_connectResult = 0;
+			}
+
+			if (m_isDisConnected)
+			{
+				CCLOG("player diconnected");
+			}
+
+			return false;
+		}
+
+		if (m_sendConnected)
+		{
+			if (g_connectResult > 0)
+			{
+				OnConnected();
+				m_sendConnected = false;
+			}
+		}
+
+		if (!Select())
+		{
+			//ProcessInput();
+			return false;
+		}
+
+#ifdef _WIN32
+		Sleep(0);
+#else  // POSIX
+		sched_yield();
+#endif
+	}
+	
+	return true;
+}
+
+#pragma optimize("",off) 
 void WinTcp::ClientSocket::update(float dt)
 {
-	if (!m_Socket.isValid())
-	{
-		if (m_isConnected)
-		{
-			OnDisconnect();
-		}
-        
-        if (g_connectResult < 0)
-        {
-            //OnDisconnect();
-            g_connectResult = 0;
-        }
-
-		if (m_isDisConnected)
-		{
-			CCLOG("player diconnected");
-		}
-		       
-		return;
-	}
-    
-    if (m_sendConnected)
-    {
-        if(g_connectResult > 0)
-        {
-            OnConnected();
-            m_sendConnected = false;
-        }
-    }
-
-	if (!Select())
-	{
-		//ProcessInput();
-		return;
+	auto packet = m_PacketQueue.PopPacket();
+	while (packet) {
+		message::Packet::Instance()->TriggerPacket(packet);
+		delete packet;
+		packet = m_PacketQueue.PopPacket();
 	}
 }
+#pragma optimize("",on) 
 
 void WinTcp::ClientSocket::Release(void)
 {
@@ -145,14 +194,9 @@ int WinTcp::ClientSocket::Connect(const char* szServerAddr, int nServerPort)
 
 	m_sendConnected = true;
 	m_isConnecting = false;
+	Start();
 	ACCOUNT->LoginAccount();
 
-	/*#ifdef _WIN32
-	m_hConnectThread = CreateThread(NULL, 0, _ConnectThread, NULL, 0, NULL);
-#else
-	pthread_create(&m_hConnectThread, NULL, _ConnectThread, NULL);
-	pthread_detach(m_hConnectThread);
-#endif*/
 	return 1;
 }
 
@@ -297,6 +341,21 @@ void WinTcp::ClientSocket::OnDisconnect(void)
 	m_isConnected = false;
 	m_isDisConnected = true;
 }
+
+#ifdef _WIN32
+DWORD WINAPI WinTcp::ClientSocket::_LoopThread(LPVOID data)
+{
+	CLIENT_TCP->Loop();
+	return 0;
+}
+#else
+void* WinTcp::ClientSocket::_LoopThread(void* data)
+{
+	CLIENT_TCP->Loop();
+	pthread_exit(NULL);
+	return 0;
+}
+#endif
 /*
 WinTcp::CLIENT_TCP->Initialize(NULL);
 WinTcp::CLIENT_TCP->Connect("192.168.84.62", 31700);

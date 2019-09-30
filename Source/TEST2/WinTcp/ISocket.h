@@ -34,7 +34,8 @@ namespace WinTcp {
 		virtual bool Restart() = 0;		//重启服务
 		virtual bool Send(const char *, int) = 0;		//发送数据
 		virtual int	 Connect(const char* szServerAddr, int nServerPort) = 0;		//连接
-		virtual bool Disconnect() = 0;		//断开连接
+		virtual bool Disconnect() = 0;	//断开连接
+		virtual bool Loop() = 0;		//主循环
 
 	protected:
 		virtual void OnDisconnect() = 0;		//当断开连接
