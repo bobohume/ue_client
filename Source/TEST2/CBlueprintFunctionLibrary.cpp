@@ -25,5 +25,9 @@ FString UCBlueprintFunctionLibrary::BuildString_Int64(const FString& AppendTo, c
 
 FString UCBlueprintFunctionLibrary::Conv_Int64ToString(int64 InInt64)
 {
-	return FString::Printf(TEXT("%I64d"), InInt64);
+#ifdef _WIN32
+    return FString::Printf(TEXT("%I64d"), InInt64);
+#else
+	return FString::Printf(TEXT("%lld"), InInt64);
+#endif
 }
