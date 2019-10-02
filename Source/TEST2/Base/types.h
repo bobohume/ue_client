@@ -318,6 +318,16 @@ inline dsize_t dStrlen(const char *str)
 {
 	return (dsize_t)strlen(str);
 }
+    
+inline std::string Int64ToStr(int64 InInt64){
+    char buf[8];
+#ifdef _WIN32
+    std::sprintf(buf, "%I64d", InInt64);
+#else
+    std::sprintf(buf, "%lld", InInt64);
+#endif
+    return buf;
+}
 
 inline void *dMemmove(void * dst, const void * src, size_t count)
 {
