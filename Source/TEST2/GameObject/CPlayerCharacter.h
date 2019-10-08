@@ -8,7 +8,7 @@
 #include "CPlayerCharacter.generated.h"
 
 UCLASS()
-class TEST2_API ACPlayerCharacter : public ACGameObjectCharacter
+class ACPlayerCharacter : public ACGameObjectCharacter
 {
 	GENERATED_BODY()
 

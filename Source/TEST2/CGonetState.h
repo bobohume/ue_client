@@ -11,7 +11,7 @@
  * 
  */
 UCLASS()
-class TEST2_API ACGonetState : public AGameStateBase
+class ACGonetState : public AGameStateBase
 {
 	GENERATED_BODY()
 	

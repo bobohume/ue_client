@@ -13,7 +13,7 @@
  */
 //蓝图全局方法
 UCLASS()
-class TEST2_API UCBlueprintFunctionLibrary : public UBlueprintFunctionLibrary
+class UCBlueprintFunctionLibrary : public UBlueprintFunctionLibrary
 {
 	GENERATED_BODY()
 	
