@@ -61,6 +61,7 @@ bool EntityMgr::_W_C_ENTITY(::google::protobuf::Message* _packet) {
 			if (Id == WinTcp::ACCOUNT->m_AccountId) {
 				UE_LOG(LogClass, Log, TEXT("server move [%f] [%f] [%f]"), pos.X, pos.Y, pos.Z);
 				FVector pos1 = pEntity->GetActorLocation();
+                pos.Z = pos1.Z;
 				pos1 -= pos;
 				if (FMath::Abs(pos1.X) > 120 || FMath::Abs(pos1.Y) > 120) {
 					pEntity->SetActorLocation(pos);

@@ -31,7 +31,7 @@ public:
 	//UFUNCTION(BlueprintCallable, Category = "C++ | NetWork")
 	//void UpdateTick();
 	//蓝图创建对象实体
-	UFUNCTION(BlueprintImplementableEvent, Category = "Gonet | Entity")
+	UFUNCTION(BlueprintImplementableEvent, Category = "Gonet|Entity")
 	APawn* SpawnPlayer(FVector pos, FRotator rotation);
 
 	std::unordered_map<int64, ACGameObjectCharacter*> EntityMap;

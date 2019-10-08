@@ -3,6 +3,8 @@
 
 #include "CBlueprintFunctionLibrary.h"
 #include "Base/types.h"
+#include "Runtime/Engine/Classes/Engine/World.h"
+#include "CGonetState.h"
 
 int64 UCBlueprintFunctionLibrary::Conv_StringToInt64(const FString& InString)
 {
@@ -27,4 +29,16 @@ FString UCBlueprintFunctionLibrary::BuildString_Int64(const FString& AppendTo, c
 FString UCBlueprintFunctionLibrary::Conv_Int64ToString(int64 InInt64)
 {
     return FString(Base::Int64ToStr(InInt64).c_str());
+}
+
+ACGameObjectCharacter* UCBlueprintFunctionLibrary::GetEntity(int64 Id)
+{
+    auto pGonetState = Cast<ACGonetState>(GWorld->GetGameState());
+    auto& EntityMap = pGonetState->EntityMap;
+    ACGameObjectCharacter* pEntity = NULL;
+    auto itr = EntityMap.find(Id);
+    if (itr != EntityMap.end()) {
+        return itr->second;
+    }
+    return NULL;
 }

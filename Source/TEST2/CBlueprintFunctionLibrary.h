@@ -4,6 +4,8 @@
 
 #include "CoreMinimal.h"
 #include "Kismet/BlueprintFunctionLibrary.h"
+#include "GameObject/CGameObjectCharacter.h"
+#include <unordered_map>
 #include "CBlueprintFunctionLibrary.generated.h"
 
 /**
@@ -16,6 +18,7 @@ class TEST2_API UCBlueprintFunctionLibrary : public UBlueprintFunctionLibrary
 	GENERATED_BODY()
 	
 public:
+    //---------------------int64 to string------------------//
 	/**
 	 * Converts a int64->string, creating a new string in the form AppendTo+Prefix+InInt64+Suffix
 	 * @param AppendTo - An existing string to use as the start of the conversion string
@@ -27,7 +30,6 @@ public:
 	UFUNCTION(BlueprintPure, meta = (DisplayName = "BuildString (integer64)"), Category = "Utilities|String")
 	static FString BuildString_Int64(const FString& AppendTo, const FString& Prefix, int64 InInt64, const FString& Suffix);
 
-
 	/** Converts a string to a int64 value */
 	UFUNCTION(BlueprintPure, meta = (DisplayName = "String To Int64", CompactNodeTitle = "->", BlueprintAutocast), Category = "Utilities|String")
 	static int64 Conv_StringToInt64(const FString& InString);
@@ -35,4 +37,10 @@ public:
 	/** Converts an integer value to a string */
 	UFUNCTION(BlueprintPure, meta = (DisplayName = "ToString (integer64)", CompactNodeTitle = "->", BlueprintAutocast), Category = "Utilities|String")
 	static FString Conv_Int64ToString(int64 InInt64);
+    //---------------------int64 to string------------------//
+    
+    //----------------------entiy--------------------------//
+    /** get enity by id */
+    UFUNCTION(BlueprintPure, meta = (DisplayName = "GetEntity(id)", /*CompactNodeTitle = "->",*/ BlueprintAutocast), Category = "Gonet|Entity")
+    static ACGameObjectCharacter* GetEntity(int64 Id);
 };

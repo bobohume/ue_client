@@ -27,10 +27,14 @@ public:
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
 
 	// Entity Id
-	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Entity)
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Entity")
 	int64 Id;
+    
+    // Entity TargetId
+    UPROPERTY(VisibleAnywhere, BlueprintReadWrite, meta=(DisplayName="TargetId"), Category = "Entity")
+    int64 TargetId;
 
 	// Entity move
-	UFUNCTION(BlueprintImplementableEvent, Category = "Gonet | Entity")
+	UFUNCTION(BlueprintImplementableEvent, Category = "Entity")
 	void MoveTo(FVector pos);
 };
