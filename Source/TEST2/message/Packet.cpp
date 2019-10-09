@@ -1,5 +1,6 @@
 #include "Packet.h"
 #include "Base/MessageCode.h"
+#include "Base/binary.h"
 #include "WinTcp/TcpSocket.h"
 #include "message.pb.h"
 #include "client.pb.h"
@@ -9,10 +10,11 @@ using namespace Base;
 
 int Packet::Encode(::google::protobuf::Message* packet, char buff[]) {
 	U32 packetId = GetMessageCode(packet->GetDescriptor()->name().c_str());
-	buff[0] = static_cast<unsigned char>(packetId);
+	Base::LITTLE->PutUint32(buff, packetId);
+	/*buff[0] = static_cast<unsigned char>(packetId);
 	buff[1] = static_cast<unsigned char>(packetId >> 8);
 	buff[2] = static_cast<unsigned char>(packetId >> 16);
-	buff[3] = static_cast<unsigned char>(packetId >> 24);
+	buff[3] = static_cast<unsigned char>(packetId >> 24);*/
 	std::string str = packet->SerializeAsString();
 	memcpy(&buff[4], str.c_str(), str.length());
 	return str.length() + 4;
@@ -20,7 +22,8 @@ int Packet::Encode(::google::protobuf::Message* packet, char buff[]) {
 
 int Packet::Decode(char* buff)
 {
-	auto Id = int((unsigned char)buff[0]) | int((unsigned char)buff[1] << 8) | int((unsigned char)buff[2] << 16) | int((unsigned char)buff[3] << 24);
+	auto Id = Base::LITTLE->Uint32(buff);
+	//auto Id = int((unsigned char)buff[0]) | int((unsigned char)buff[1] << 8) | int((unsigned char)buff[2] << 16) | int((unsigned char)buff[3] << 24);
 	return Id;
 }
 

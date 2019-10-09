@@ -1,32 +1,18 @@
 #include "bitStream.h"
+#include "binary.h"
 
+#pragma optimize("",off) 
 namespace Base
 {
 	BitStream::BitStream(void *bufPtr, S32 bufSize, S32 maxWriteSize /* = -1 */)
 	{
-		stringBuffer = NULL;
-		tmpBuf = NULL;
-		zipSize = 0;
-		zipflag = 0;
 		setBuffer(bufPtr, bufSize,maxWriteSize);
 	}
     
 	BitStream::~BitStream()
 	{
-		if(tmpBuf)
-			delete[] tmpBuf;
-		tmpBuf = NULL;
-		zipflag = 0;
-		zipSize = 0;
 	}
-    
-	// bitstream utility functions
-    
-	void BitStream::setStringBuffer(char buffer[256])
-	{
-		stringBuffer = buffer;
-	}
-    
+  
 	bool BitStream::bindPacketStream(U8 *buffer,U32 writeSize)
 	{
 		if(!writeSize)
@@ -36,10 +22,6 @@ namespace Base
 		setPosition(0);
 		return true;
 	}
-    
-	// CodeReview WTF is this additional IsEqual? - BJG, 3/29/07
-    
-	inline bool IsEqual(F32 a, F32 b) { return a == b; }
     
     
 	void BitStream::setBuffer(void *bufPtr, S32 size, S32 maxSize)
@@ -129,20 +111,7 @@ namespace Base
         
 		bitNum += bitCount;
 	}
-    
-	void BitStream::setBit(S32 bitCount, bool set)
-	{
-		if(set)
-			*(dataPtr + (bitCount >> 3)) |= (1 << (bitCount & 0x7));
-		else
-			*(dataPtr + (bitCount >> 3)) &= ~(1 << (bitCount & 0x7));
-	}
-    
-	bool BitStream::testBit(S32 bitCount)
-	{
-		return (*(dataPtr + (bitCount >> 3)) & (1 << (bitCount & 0x7))) != 0;
-	}
-    
+
 	bool BitStream::writeFlag(bool val)
 	{
 		if((flagNum - ((flagNum>>3)<<3) ==0) && !tailFlag)
@@ -215,79 +184,76 @@ namespace Base
 		bitNum += bitCount;
 	}
     
-	bool BitStream::_read(U32 size, void *dataPtr)
+	void BitStream::writeInt(S32 val, S32 bitCount)
 	{
-		readBits(size << 3, dataPtr);
-		return true;
+		char buff[4] = {0, 0, 0, 0};
+		LITTLE->PutUint32(buff, val);
+		writeBits(bitCount, buff);
 	}
-    
-	bool BitStream::_write(U32 size, const void *dataPtr)
-	{
-		writeBits(size << 3, dataPtr);
-		return true;
-	}
-    
+
 	S32 BitStream::readInt(S32 bitCount)
 	{
 		S32 ret = 0;
-		readBits(bitCount, &ret);
-		if(bitCount == 32)
+		char buff[4] = { 0, 0, 0, 0 };
+		readBits(bitCount, buff);
+		ret = LITTLE->Uint32(buff);
+		if (bitCount == 32)
 			return ret;
 		else
 			ret &= (1 << bitCount) - 1;
 		return ret;
 	}
-    
-	void BitStream::writeInt(S32 val, S32 bitCount)
+
+	void BitStream::writeInt64(S64 val, S32 bitCount)
 	{
-		writeBits(bitCount, &val);
+		char buff[8] = { 0, 0, 0, 0, 0, 0, 0, 0 };
+		LITTLE->PutUint64(buff, val);
+		writeBits(bitCount, buff);
 	}
-    
+
+	S64  BitStream::readInt64(S32 bitCount) 
+	{
+		S64 ret = 0;
+		char buff[8] = { 0, 0, 0, 0, 0, 0, 0, 0 };
+		readBits(bitCount, buff);
+		ret = LITTLE->Uint64(buff);
+		if (bitCount == 64)
+			return ret;
+		else
+			ret &= (1 << S64(bitCount)) - 1;
+		return ret;
+	}
+
 	void BitStream::writeFloat(F32 f, S32 bitCount)
 	{
-		writeInt((S32)(f * ((1 << bitCount) - 1)), bitCount);
+		writeInt(*(S32*)(&f), bitCount);
 	}
     
 	F32 BitStream::readFloat(S32 bitCount)
 	{
-		return readInt(bitCount) / F32((1 << bitCount) - 1);
-	}
-    
-	void BitStream::writeSignedFloat(F32 f, S32 bitCount)
+		S32 val = readInt(bitCount);
+		return *(F32*)(&val) ;
+	}  
+
+	void BitStream::writeFloat64(F64 f, S32 bitCount)
 	{
-		writeInt((S32)(((f + 1) * .5) * ((1 << bitCount) - 1)), bitCount);
+		writeInt64(*(S64*)(&f), bitCount);
 	}
-    
-	F32 BitStream::readSignedFloat(S32 bitCount)
+
+	F64 BitStream::readFloat64(S32 bitCount)
 	{
-		return readInt(bitCount) * 2 / F32((1 << bitCount) - 1) - 1.0f;
+		S64 val = readInt64(bitCount);
+		return *(F64*)(&val);
 	}
-    
-	void BitStream::writeSignedInt(S32 value, S32 bitCount)
-	{
-		if(writeFlag(value < 0))
-			writeInt(-value, bitCount - 1);
-		else
-			writeInt(value, bitCount - 1);
-	}
-    
-	S32 BitStream::readSignedInt(S32 bitCount)
-	{
-		if(readFlag())
-			return -readInt(bitCount - 1);
-		else
-			return readInt(bitCount - 1);
-	}
-    
+
 	//------------------------------------------------------------------------------
-    
 	void BitStream::readString(char *buf,int maxSize)
 	{
 		buf[0] = 0;
         
 		if(readFlag())
 		{
-			int len = readInt(8);
+			int len = readInt(16);
 			LIB_ASSERT(len<maxSize,"BitStream::readString Out Range");
 			if(len>=maxSize)
 			{
@@ -319,51 +285,20 @@ namespace Base
         
 		if(writeFlag(len>0))
 		{
-			writeInt(len,8);
+			writeInt(len,16);
 			writeBits(len<<3,string);
 		}
 	}
-    
-    
-	void BitStream::readStringEx(char *stringBuf,int maxSize)
+
+	std::string BitStream::readString(int maxSize) 
 	{
-		stringBuf[0] = 0;
-        
-		if(readFlag())
-		{
-			int len = readInt(16);
-			LIB_ASSERT(len<maxSize,"BitStream::readString Out Range");
-			if(len>=maxSize)
-			{
-				char *pNewBuf = new char[len];
-				readBits(len<<3,pNewBuf);
-                
-				len = maxSize-1;
-				memcpy(stringBuf,pNewBuf,len);
-				delete [] pNewBuf;
-			}
-			else
-			{
-				readBits(len<<3,stringBuf);
-			}
-			stringBuf[len] = 0;
-		}
+		char buff[1024];
+		readString(buff, maxSize);
+		return buff;
 	}
-    
-	void BitStream::writeStringEx(const char *stringBuf, S32 maxSize)
+	void BitStream::writeString(std::string str, S32 maxLen)
 	{
-		if(!stringBuf)
-			stringBuf = "";
-        
-		S32 len = dStrlen(stringBuf);
-		LIB_ASSERT(len<maxSize,"BitStream::writeString Out Range");
-		if(len>=maxSize)
-			len = maxSize-1;
-        
-		if(writeFlag(len>0))
-		{
-			writeInt(len,16);
-			writeBits(len<<3,stringBuf);
-		}
+		writeString(str.c_str(), maxLen);
 	}
 };
+#pragma optimize("",on) 

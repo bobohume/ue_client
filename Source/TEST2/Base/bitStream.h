@@ -29,89 +29,46 @@ protected:
     bool error;
     S32  maxReadBitNum;
     S32  maxWriteBitNum;
-    char *stringBuffer;
-    
-    struct zipHead
-    {
-        int  srcSize;
-        int  tagSize;
-    };
-    
-    U8		zipflag;	//zipflag
-    U8*		tmpBuf;		//zipBuffer
-    size_t	zipSize;	//zipBufferSize
-    
 public:
-    bool bindPacketStream(U8 *buffer,U32 writeSize);
-    
+	BitStream(void *bufPtr, S32 bufSize, S32 maxWriteSize = -1);
+	virtual ~BitStream();
+
+    bool bindPacketStream(U8 *buffer,U32 writeSize); 
     void setBuffer(void *bufPtr, S32 bufSize, S32 maxSize = -1);
     U8*  getBuffer() { return dataPtr; }
     U8*  getBytePtr();
-    
     U32 getReadByteSize();
-    
     S32  getCurPos() const;
-    
-    BitStream(void *bufPtr, S32 bufSize, S32 maxWriteSize = -1);
-    virtual ~BitStream();
+	U32  getPosition() const;
+	U32  getStreamSize();
+	bool setPosition(const U32 in_newPosition);
     void clear();
-    
-    //void compress();
-    
-    void setStringBuffer(char buffer[256]);
-    
-    void writeInt(S32 value, S32 bitCount);
-    S32  readInt(S32 bitCount);
-    
-    void writeSignedInt(S32 value, S32 bitCount);
-    S32  readSignedInt(S32 bitCount);
-    
-    // read and write floats... floats are 0 to 1 inclusive, signed floats are -1 to 1 inclusive
-    
-    F32  readFloat(S32 bitCount);
-    F32  readSignedFloat(S32 bitCount);
-    
-    void writeFloat(F32 f, S32 bitCount);
-    void writeSignedFloat(F32 f, S32 bitCount);
+   
     
     virtual void writeBits(S32 bitCount, const void *bitPtr);
     virtual void readBits(S32 bitCount, void *bitPtr);
-    virtual bool writeFlag(bool val);
-    
-    /*
-     inline bool writeFlag(U32 val)
-     {
-     return writeFlag(val != 0);
-     }*/
-    
-    
-    inline bool writeFlag(void *val)
-    {
-        return writeFlag(val != 0);
-    }
-    
-    virtual bool readFlag();
-    
-    void setBit(S32 bitCount, bool set);
-    bool testBit(S32 bitCount);
+	void writeInt(S32 val, S32 bitCount);
+	S32  readInt(S32 bitCount);
+	void writeInt64(S64 val, S32 bitCount);
+	S64  readInt64(S32 bitCount);
+	F32  readFloat(S32 bitCount);
+	void writeFloat(F32 f, S32 bitCount);
+	F64  readFloat64(S32 bitCount);
+	void writeFloat64(F64 f, S32 bitCount);
+    virtual bool writeFlag(bool val); 
+	virtual bool readFlag();
+	void readString(char *stringBuf, int maxSize = 255);
+	void writeString(const char *stringBuf, S32 maxLen = 255);
+	std::string readString(int maxSize = 255);
+	void writeString(std::string str, S32 maxLen = 255);
     
     bool isFull() { return bitNum > bitsLimite; }
     bool isValid() { return !error; }
     
-    bool _read (const U32 size,void* d);
-    bool _write(const U32 size,const void* d);
-    
-    void readString(char *stringBuf,int maxSize);
-    void writeString(const char *stringBuf, S32 maxLen=255);
-    
-    void readStringEx(char *stringBuf,int maxSize);
-    void writeStringEx(const char *stringBuf, S32 maxLen);
-    
-    //void readCompress(char* outbuf, size_t& outlen);
-    //void writeCompress(char* inbuf, int inlen);
-    U32  getPosition() const;
-    bool setPosition(const U32 in_newPosition);
-    U32  getStreamSize();
+	inline bool writeFlag(void *val)
+	{
+		return writeFlag(val != 0);
+	}
 };
 
 //------------------------------------------------------------------------------
