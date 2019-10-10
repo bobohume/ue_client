@@ -2,7 +2,7 @@
 
 #include "DataRes.h"
 #include "Engine/DataTable.h"  
-#include "Data.generated.h"  
+#include "MapData.generated.h"  
 
 USTRUCT(BlueprintType)
 struct FMapData
@@ -31,6 +31,14 @@ class MapDataRes : public DataRes<int32, FMapData*>
 {
 public:
 	MapDataRes();
-	~MapDataRes();
+
+	static MapDataRes* Instance() {
+		static MapDataRes s_Instace;
+		return &s_Instace;
+	}
+
+	virtual ~MapDataRes();
 	virtual bool Read();
 };
+
+#define MAPDATA MapDataRes::Instance()

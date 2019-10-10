@@ -6,6 +6,7 @@
 #include "Kismet/BlueprintFunctionLibrary.h"
 #include "GameObject/CGameObjectCharacter.h"
 #include <unordered_map>
+#include "Data/MapData.h"
 #include "CBlueprintFunctionLibrary.generated.h"
 
 /**
@@ -43,4 +44,9 @@ public:
     /** get enity by id */
     UFUNCTION(BlueprintPure, meta = (DisplayName = "GetEntity(id)", /*CompactNodeTitle = "->",*/ BlueprintAutocast), Category = "Gonet|Entity")
     static ACGameObjectCharacter* GetEntity(int64 Id);
+
+	//-----------------------data-------------------------//
+	 /** get map data */
+	UFUNCTION(BlueprintPure, meta = (DisplayName = "GetMapData(MapId)", /*CompactNodeTitle = "->",*/ BlueprintAutocast), Category = "Gonet|Data")
+	static FMapData GetMapData(int32 MapId);
 };

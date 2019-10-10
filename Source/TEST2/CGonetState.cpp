@@ -4,6 +4,7 @@
 #include "WinTcp/Account.h"
 #include "Entity.h"
 #include "Player/Player.h"
+#include "Data/MapData.h"
 
 ACGonetState::ACGonetState()
 {
@@ -13,6 +14,7 @@ ACGonetState::ACGonetState()
 	WinTcp::ACCOUNT;
 	ENTITYMGR;
 	PLAYER;
+	MAPDATA->Read();
 }
 
 // Called when the game starts or when spawned

@@ -10,22 +10,22 @@ public:
 	DataRes() {
 	}
 
-	~DataRes() {
+	virtual ~DataRes() {
 	}
 	
-	void Close() {
+	virtual void Close() {
 		Clear();
 	}
 
-	void Clear() {
+	virtual void Clear() {
 		m_DataMap.clear();
 	}
 
-	void AddData(U key, T data) {
+	virtual void AddData(U key, T data) {
 		m_DataMap[key] = data;
 	}
 
-	T GetData(U key) {
+	virtual T GetData(U key) {
 		auto itr = m_DataMap.find(key);
 		if (itr != m_DataMap.end()) {
 			return itr->second;
@@ -33,13 +33,11 @@ public:
 		return NULL;
 	}
 
-	std::unordered_map<U, T> GetMap() {
+	virtual std::unordered_map<U, T> GetMap() {
 		return m_DataMap;
 	}
 
-	virtual bool Read() {
-		return true;
-	}
+	virtual bool Read() = 0;
 private:
 	std::unordered_map<U, T> m_DataMap;
 };

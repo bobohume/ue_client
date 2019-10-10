@@ -23,7 +23,7 @@ void  CDataFile::ReadDataInit()
 void CDataFile::ReadDataClose()
 {
 	if (m_pData) {
-		delete(m_pData);
+		free(m_pData);
 		m_pData = NULL;
 	}
 	fstream = NULL;

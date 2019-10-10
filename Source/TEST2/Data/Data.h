@@ -15,17 +15,18 @@ public:
 
 	/** The 'Name' column is the same as the XP Level */
 
+	/** XP to get to the given level from the previous level */
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = AiData)
+		int32 Id;
+
 	/** Extra HitPoints gained at this level */
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = AiData)
-	int32 Op;
+		int32 Op;
 
 	/** Icon to use for Achivement */
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = AiData)
-	int32 Type;
+		int32 Type;
 
-	/** Icon to use for Achivement */
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = AiData)
-	FString Name;
 	/** Icon to use for Achivement */
 	//UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = AiData)
 	//	TAssetPtr<UTexture> AchievementIcon;
