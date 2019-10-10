@@ -9,6 +9,11 @@
 #include "Data/MapData.h"
 #include "CBlueprintFunctionLibrary.generated.h"
 
+UENUM(BlueprintType)
+enum class DataType :uint8 
+{
+	MAP UMETA(DisplayName = "µØÍ¼")
+};
 /**
  * 
  */
@@ -48,5 +53,5 @@ public:
 	//-----------------------data-------------------------//
 	 /** get map data */
 	UFUNCTION(BlueprintPure, meta = (DisplayName = "GetMapData(MapId)", /*CompactNodeTitle = "->",*/ BlueprintAutocast), Category = "Gonet|Data")
-	static FMapData GetMapData(int32 MapId);
+	static FMapData GetMapData(DataType Type, int32 MapId);
 };

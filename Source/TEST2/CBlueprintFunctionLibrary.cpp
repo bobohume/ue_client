@@ -43,6 +43,6 @@ ACGameObjectCharacter* UCBlueprintFunctionLibrary::GetEntity(int64 Id)
     return NULL;
 }
 
-FMapData UCBlueprintFunctionLibrary::GetMapData(int32 MapId) {
+FMapData UCBlueprintFunctionLibrary::GetMapData(DataType Type, int32 MapId) {
 	return *MAPDATA->GetData(MapId);
 }
