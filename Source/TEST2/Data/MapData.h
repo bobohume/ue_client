@@ -1,7 +1,6 @@
 #pragma once  
 
-#include "DataRes.h"
-#include "Engine/DataTable.h"  
+#include "DataRes.h" 
 #include "MapData.generated.h"  
 
 USTRUCT(BlueprintType)
