@@ -168,7 +168,7 @@ void ATEST2Character::Tick(float DeltaTime)
 }
 
 void ATEST2Character::MovePacket(FVector location, float yaw, float duration){
-    if(GetWorld()->TimeSince(m_fMoveTick) < 0.0333333){
+    if(GetWorld()->TimeSince(m_fMoveTick) < 0.1){
         return;
 	}   
     m_fMoveTick = GetWorld()->GetTimeSeconds();

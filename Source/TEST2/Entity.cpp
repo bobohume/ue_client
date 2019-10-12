@@ -64,7 +64,7 @@ bool EntityMgr::_W_C_ENTITY(::google::protobuf::Message* _packet) {
 				FVector pos1 = pEntity->GetActorLocation();
                 pos.Z = pos1.Z;
 				pos1 -= pos;
-				if (FMath::Abs(pos1.X) > 40 || FMath::Abs(pos1.Y) > 40) {
+				if (FMath::Abs(pos1.X) > 120 || FMath::Abs(pos1.Y) > 120) {
 					pEntity->SetActorLocation(pos);
 				}
 			}else {
