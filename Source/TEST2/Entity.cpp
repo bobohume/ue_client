@@ -1,6 +1,7 @@
 #include "Entity.h"
 #include "message/Packet.h"
 #include "message/game.pb.h"
+#include "Runtime/AIModule/Classes/AIController.h"
 #include "Runtime/Engine/Classes/Engine/World.h"
 #include "Runtime/Engine/Classes/Kismet/GameplayStatics.h"
 #include "Runtime/Engine/Classes/AI/NavigationSystemBase.h"
@@ -63,11 +64,14 @@ bool EntityMgr::_W_C_ENTITY(::google::protobuf::Message* _packet) {
 				FVector pos1 = pEntity->GetActorLocation();
                 pos.Z = pos1.Z;
 				pos1 -= pos;
-				if (FMath::Abs(pos1.X) > 120 || FMath::Abs(pos1.Y) > 120) {
+				if (FMath::Abs(pos1.X) > 40 || FMath::Abs(pos1.Y) > 40) {
 					pEntity->SetActorLocation(pos);
 				}
 			}else {
-				pEntity->MoveTo(pos);
+				auto pAi = Cast<AAIController>(pEntity->GetController());
+				if (pAi) {
+					pAi->MoveToLocation(pos);
+				}
 			}
 		}
 

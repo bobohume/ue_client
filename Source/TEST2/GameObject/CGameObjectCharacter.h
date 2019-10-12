@@ -35,6 +35,6 @@ public:
     int64 TargetId;
 
 	// Entity move
-	UFUNCTION(BlueprintImplementableEvent, Category = "Entity")
-	void MoveTo(FVector pos);
+	//UFUNCTION(BlueprintImplementableEvent, Category = "Entity")
+	//void MoveTo(FVector pos);
 };
