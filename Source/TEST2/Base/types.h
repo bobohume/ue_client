@@ -320,12 +320,13 @@ inline dsize_t dStrlen(const char *str)
 }
     
 inline std::string Int64ToStr(int64 InInt64){
-    char buf[64];
+    char buf[65];
 #ifdef _WIN32
     std::sprintf(buf, "%I64d", InInt64);
 #else
     std::sprintf(buf, "%lld", InInt64);
 #endif
+	buf[64] = '\0';
     return buf;
 }
 

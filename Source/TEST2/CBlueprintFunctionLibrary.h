@@ -7,12 +7,13 @@
 #include "GameObject/CGameObjectCharacter.h"
 #include <unordered_map>
 #include "Data/MapData.h"
+#include "Data/Stats.h"
 #include "CBlueprintFunctionLibrary.generated.h"
 
 UENUM(BlueprintType)
-enum class DataType :uint8 
+enum class EnDataType :uint8
 {
-	MAP UMETA(DisplayName = "µØÍ¼")
+	MAP UMETA(DisplayName = "map")
 };
 /**
  * 
@@ -53,5 +54,19 @@ public:
 	//-----------------------data-------------------------//
 	 /** get map data */
 	UFUNCTION(BlueprintPure, meta = (DisplayName = "GetMapData(MapId)", /*CompactNodeTitle = "->",*/ BlueprintAutocast), Category = "Gonet|Data")
-	static FMapData GetMapData(DataType Type, int32 MapId);
+	static FMapData GetMapData(int32 MapId);
+
+	//-----------------------stats-----------------------//
+	UFUNCTION(BlueprintPure, meta = (DisplayName = "+Stats(FStats3 a, FStats3 b)", CompactNodeTitle = "+", BlueprintAutocast), Category = "Gonet|Data")
+	static FStats3 AddStats(FStats3 a, FStats3 b);
+
+	UFUNCTION(BlueprintPure, meta = (DisplayName = "-Stats(FStats3 a, FStats3 b)", CompactNodeTitle = "-", BlueprintAutocast), Category = "Gonet|Data")
+	static FStats3 SubStats(FStats3 a, FStats3 b);
+
+	UFUNCTION(BlueprintPure, meta = (DisplayName = "*Stats(FStats3 a, float count)", CompactNodeTitle = "*", BlueprintAutocast), Category = "Gonet|Data")
+	static FStats3 MulStats(FStats3 a, float count);
+
+	UFUNCTION(BlueprintPure, meta = (DisplayName = "AddStatsI(FStats3 a, FStats3 b, float count)", CompactNodeTitle = "++", BlueprintAutocast), Category = "Gonet|Data")
+	static FStats3 AddStatsI(FStats3 a, FStats3 b,  float count);
+	//-----------------------stats-----------------------//
 };

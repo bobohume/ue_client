@@ -43,6 +43,35 @@ ACGameObjectCharacter* UCBlueprintFunctionLibrary::GetEntity(int64 Id)
     return NULL;
 }
 
-FMapData UCBlueprintFunctionLibrary::GetMapData(DataType Type, int32 MapId) {
-	return *MAPDATA->GetData(MapId);
+FMapData UCBlueprintFunctionLibrary::GetMapData(int32 MapId) {
+	static FMapData s_Data;
+	auto pData = MAPDATA->GetData(MapId);
+	if (pData) {
+		return *pData;
+	}
+	return s_Data;
+}
+
+FStats3 UCBlueprintFunctionLibrary::AddStats(FStats3 a, FStats3 b) 
+{
+	a += b;
+	return a;
+}
+
+FStats3 UCBlueprintFunctionLibrary::SubStats(FStats3 a, FStats3 b)
+{
+	a -= b;
+	return a;
+}
+
+FStats3 UCBlueprintFunctionLibrary::MulStats(FStats3 a, float count)
+{
+	a *= count;
+	return a;
+}
+
+FStats3 UCBlueprintFunctionLibrary::AddStatsI(FStats3 a, FStats3 b, float count)
+{
+	a.Add(b, count);
+	return a;
 }

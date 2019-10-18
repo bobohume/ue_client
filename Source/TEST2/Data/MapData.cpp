@@ -27,7 +27,7 @@ bool MapDataRes::Read()
 	}
 
 	for(int i = 0; i < file.RecordNum; i++){
-		FMapData* pData = new FMapData{};
+		FMapData* pData = new FMapData();
 		file.GetData(lineData);
 		pData->Id = lineData.Int(MAP_DATA_NAME, "Id");
 
