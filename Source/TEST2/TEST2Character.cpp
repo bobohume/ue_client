@@ -124,7 +124,7 @@ void ATEST2Character::MoveForward(float Value)
 		// get forward vector
 		const FVector Direction = FRotationMatrix(YawRotation).GetUnitAxis(EAxis::X);
 		AddMovementInput(Direction, Value);
-		m_Xval = Value;
+		m_Yval = Value;
 		m_bMove = true;
 	}
 }
@@ -140,7 +140,7 @@ void ATEST2Character::MoveRight(float Value)
 		const FVector Direction = FRotationMatrix(YawRotation).GetUnitAxis(EAxis::Y);
 		// add movement in that direction
 		AddMovementInput(Direction, Value);
-		m_Yval = Value;
+		m_Xval = Value;
 		m_bMove = true;
 	}
 }
@@ -182,7 +182,7 @@ void ATEST2Character::MovePacket(FVector location, float yaw, float duration){
 	pos->set_x(-location.X);
 	pos->set_y(-location.Y);
 	pos->set_z(location.Z);
-	normal->set_yaw(yaw + PI);
+	normal->set_yaw(yaw+PI);
 	normal->set_duration(duration);
 	ClientSocket::Instance()->Send(packet);
 }
