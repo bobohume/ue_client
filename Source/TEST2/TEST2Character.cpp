@@ -151,14 +151,18 @@ void ATEST2Character::Tick(float DeltaTime)
 	Super::Tick(DeltaTime);
 	if (m_bMove) {
 		const FRotator Rotation = Controller->GetControlRotation();
-		float xval = FMath::Acos(m_Xval), yval = FMath::Asin(m_Yval);
 		float yaw = 0;
 		if (m_Xval != 0 && m_Yval != 0) {
-			yaw = (FMath::Acos(m_Xval)+ FMath::Asin(m_Yval)) /2;
+			// yaw			m_Xval     m_Yval
+			//[0.785398] [1.000000] [1.000000]  SD  PI/4
+			//[-2.356194][-1.000000][-1.000000] WA	-PI*3/4
+			//[2.356194][1.000000][-1.000000]	WD	PI*3/4   
+			//[-0.785398][-1.000000][1.000000]	SA	-PI/4
+			yaw = FMath::Atan2(m_Xval, -m_Yval) + PI / 2;
 		}else if (m_Xval != 0) {
-			yaw = FMath::Acos(m_Xval);
+			yaw = FMath::Acos(m_Xval) + PI;
 		}else {
-			yaw = FMath::Asin(m_Yval);
+			yaw = FMath::Asin(m_Yval) + PI;
 		}
 		MovePacket(GetActorLocation(), yaw + FMath::DegreesToRadians(Rotation.Yaw), 100);
 		m_bMove = false;
@@ -182,7 +186,7 @@ void ATEST2Character::MovePacket(FVector location, float yaw, float duration){
 	pos->set_x(-location.X);
 	pos->set_y(-location.Y);
 	pos->set_z(location.Z);
-	normal->set_yaw(yaw+PI);
+	normal->set_yaw(yaw);
 	normal->set_duration(duration);
 	ClientSocket::Instance()->Send(packet);
 }
