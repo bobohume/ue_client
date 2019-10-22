@@ -179,10 +179,10 @@ void ATEST2Character::MovePacket(FVector location, float yaw, float duration){
 	move->set_mode(0);
 	auto normal = move->mutable_normal();
 	auto pos = normal->mutable_pos();
-	pos->set_x(location.Y);
-	pos->set_y(location.X);
+	pos->set_x(-location.X);
+	pos->set_y(-location.Y);
 	pos->set_z(location.Z);
-	normal->set_yaw(yaw);
+	normal->set_yaw(yaw + PI);
 	normal->set_duration(duration);
 	ClientSocket::Instance()->Send(packet);
 }
