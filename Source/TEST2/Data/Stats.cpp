@@ -45,7 +45,7 @@ float GetDamageReduceSpl(int32 val) {
 FStats3 g_Stats;
 FStats3::FStats3()
 {
-	Clear();
+	//Clear();
 }
 
 void FStats3::Clear()

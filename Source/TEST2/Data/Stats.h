@@ -5,6 +5,7 @@
 
 #pragma once
 #include "CoreMinimal.h"
+#include "Engine/DataTable.h"  
 #include "Base/types.h"
 #include "Stats.generated.h"  
 // ========================================================================================================================================
@@ -14,7 +15,7 @@
 using namespace Base;
 // Õ®”√ Ù–‘
 USTRUCT(BlueprintType)
-struct FStats3
+struct FStats3 : public  FTableRowBase
 {
 	GENERATED_USTRUCT_BODY()
 public:
