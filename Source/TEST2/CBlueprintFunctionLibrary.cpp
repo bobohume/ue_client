@@ -43,15 +43,6 @@ ACGameObjectCharacter* UCBlueprintFunctionLibrary::GetEntity(int64 Id)
     return NULL;
 }
 
-FMapData UCBlueprintFunctionLibrary::GetMapData(int32 MapId) {
-	static FMapData s_Data;
-	auto pData = MAPDATA->GetData(MapId);
-	if (pData) {
-		return *pData;
-	}
-	return s_Data;
-}
-
 FStats3 UCBlueprintFunctionLibrary::AddStats(FStats3 a, FStats3 b) 
 {
 	a += b;
@@ -75,27 +66,3 @@ FStats3 UCBlueprintFunctionLibrary::AddStatsI(FStats3 a, FStats3 b, float count)
 	a.Add(b, count);
 	return a;
 }
-
-//void UBPLibrary::TestLoadTable()
-//{
-//	UDataTable *pDataTable = LoadObject<UDataTable>(NULL, UTF8_TO_TCHAR("DataTable'/Game/MyTable.MyTable'"));
-//	FString ContextString;
-//	TArray<FName> RowNames;
-//	RowNames = pDataTable->GetRowNames();
-//	for (auto& name : RowNames)
-//	{
-//		FDataTableTestData* pRow = pDataTable->FindRow<FDataTableTestData>(name, ContextString);
-//		if (pRow)
-//		{
-//			LogDebug("read by row name --- RowName:%s, ID:%d, Name:%s, HP:%d", *(name.ToString()), pRow->ID, *pRow->Name, pRow->HP);
-//		}
-//	}
-//	for (auto it : pDataTable->GetRowMap())
-//	{
-//		// it.Key has the key from first column of the CSV file
-//		// it.Value has a pointer to a struct of data. You can safely cast it to your actual type, e.g FMyStruct* data = (FMyStruct*)(it.Value);
-//		FString rowName = (it.Key).ToString();
-//		FDataTableTestData* pRow = (FDataTableTestData*)it.Value;
-//		LogDebug("read by traversal --- RowName:%s, ID:%d, Name:%s, HP:%d", *rowName, pRow->ID, *pRow->Name, pRow->HP);
-//	}
-//}

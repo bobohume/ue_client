@@ -1,10 +1,11 @@
 #pragma once  
 
-#include "DataRes.h" 
+#include "Engine/DataTable.h"  
+#include "CoreMinimal.h"
 #include "MapData.generated.h"  
 
 USTRUCT(BlueprintType)
-struct FMapData
+struct FMapData : public FTableRowBase
 {
 	GENERATED_USTRUCT_BODY()
 
@@ -25,19 +26,3 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = MapData)
 	int32 Height;
 };
-
-class MapDataRes : public DataRes<int32, FMapData*>
-{
-public:
-	MapDataRes();
-
-	static MapDataRes* Instance() {
-		static MapDataRes s_Instace;
-		return &s_Instace;
-	}
-
-	virtual ~MapDataRes();
-	virtual bool Read();
-};
-
-#define MAPDATA MapDataRes::Instance()
