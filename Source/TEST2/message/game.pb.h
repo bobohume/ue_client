@@ -792,9 +792,15 @@ class W_C_ENTITY_Entity_DataMask : public ::google::protobuf::Message /* @@proto
   ::google::protobuf::int32 type() const;
   void set_type(::google::protobuf::int32 value);
 
-  // bool RemoveFlag = 2;
+  // int32 DataId = 2;
+  void clear_dataid();
+  static const int kDataIdFieldNumber = 2;
+  ::google::protobuf::int32 dataid() const;
+  void set_dataid(::google::protobuf::int32 value);
+
+  // bool RemoveFlag = 3;
   void clear_removeflag();
-  static const int kRemoveFlagFieldNumber = 2;
+  static const int kRemoveFlagFieldNumber = 3;
   bool removeflag() const;
   void set_removeflag(bool value);
 
@@ -803,6 +809,7 @@ class W_C_ENTITY_Entity_DataMask : public ::google::protobuf::Message /* @@proto
 
   ::google::protobuf::internal::InternalMetadataWithArena _internal_metadata_;
   ::google::protobuf::int32 type_;
+  ::google::protobuf::int32 dataid_;
   bool removeflag_;
   mutable int _cached_size_;
   friend struct ::protobuf_game_2eproto::TableStruct;
@@ -2044,7 +2051,21 @@ inline void W_C_ENTITY_Entity_DataMask::set_type(::google::protobuf::int32 value
   // @@protoc_insertion_point(field_set:message.W_C_ENTITY.Entity.DataMask.Type)
 }
 
-// bool RemoveFlag = 2;
+// int32 DataId = 2;
+inline void W_C_ENTITY_Entity_DataMask::clear_dataid() {
+  dataid_ = 0;
+}
+inline ::google::protobuf::int32 W_C_ENTITY_Entity_DataMask::dataid() const {
+  // @@protoc_insertion_point(field_get:message.W_C_ENTITY.Entity.DataMask.DataId)
+  return dataid_;
+}
+inline void W_C_ENTITY_Entity_DataMask::set_dataid(::google::protobuf::int32 value) {
+  
+  dataid_ = value;
+  // @@protoc_insertion_point(field_set:message.W_C_ENTITY.Entity.DataMask.DataId)
+}
+
+// bool RemoveFlag = 3;
 inline void W_C_ENTITY_Entity_DataMask::clear_removeflag() {
   removeflag_ = false;
 }

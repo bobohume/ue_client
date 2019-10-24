@@ -4,7 +4,7 @@
 #include "WinTcp/Account.h"
 #include "Entity.h"
 #include "Player/Player.h"
-#include "Data/MapData.h"
+#include "Data/Data.h"
 
 ACGonetState::ACGonetState()
 {
@@ -14,7 +14,6 @@ ACGonetState::ACGonetState()
 	WinTcp::ACCOUNT;
 	ENTITYMGR;
 	PLAYER;
-	MAPDATA->Read();
 }
 
 // Called when the game starts or when spawned
@@ -24,6 +23,7 @@ void ACGonetState::BeginPlay()
 	WinTcp::CLIENT_TCP->Disconnect();
 	WinTcp::CLIENT_TCP->Connect("127.0.0.1", 31700);
 	EntityMap.clear();
+	DATAMGR->GetNpcData(FString("199999"));
 }
 
 // Called every frame

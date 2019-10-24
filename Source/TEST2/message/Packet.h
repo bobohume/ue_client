@@ -29,6 +29,12 @@
 #include <mutex>
 #include <unordered_map>
 
+//#pragma warning(disable:4800)
+//#pragma warning(disable:4125)
+//#pragma warning(disable:4668)
+//#pragma warning(disable:4647)
+//#pragma warning(disable:4146)
+
 namespace message {
 	class Packet
 	{

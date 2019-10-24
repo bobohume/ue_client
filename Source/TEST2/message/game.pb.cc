@@ -397,6 +397,7 @@ const ::google::protobuf::uint32 TableStruct::offsets[] GOOGLE_PROTOBUF_ATTRIBUT
   ~0u,  // no _oneof_case_
   ~0u,  // no _weak_field_map_
   GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::message::W_C_ENTITY_Entity_DataMask, type_),
+  GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::message::W_C_ENTITY_Entity_DataMask, dataid_),
   GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::message::W_C_ENTITY_Entity_DataMask, removeflag_),
   ~0u,  // no _has_bits_
   GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::message::W_C_ENTITY_Entity_MoveMask, _internal_metadata_),
@@ -465,12 +466,12 @@ static const ::google::protobuf::internal::MigrationSchema schemas[] GOOGLE_PROT
   { 23, -1, sizeof(::message::C_W_Move)},
   { 30, -1, sizeof(::message::W_C_LoginMap)},
   { 39, -1, sizeof(::message::W_C_ENTITY_Entity_DataMask)},
-  { 46, -1, sizeof(::message::W_C_ENTITY_Entity_MoveMask)},
-  { 53, -1, sizeof(::message::W_C_ENTITY_Entity_StatsMask)},
-  { 73, -1, sizeof(::message::W_C_ENTITY_Entity)},
-  { 82, -1, sizeof(::message::W_C_ENTITY)},
-  { 89, -1, sizeof(::message::W_C_DEL_SIMOBJ)},
-  { 98, -1, sizeof(::message::C_W_LoginCopyMap)},
+  { 47, -1, sizeof(::message::W_C_ENTITY_Entity_MoveMask)},
+  { 54, -1, sizeof(::message::W_C_ENTITY_Entity_StatsMask)},
+  { 74, -1, sizeof(::message::W_C_ENTITY_Entity)},
+  { 83, -1, sizeof(::message::W_C_ENTITY)},
+  { 90, -1, sizeof(::message::W_C_DEL_SIMOBJ)},
+  { 99, -1, sizeof(::message::C_W_LoginCopyMap)},
 };
 
 static ::google::protobuf::Message const * const file_default_instances[] = {
@@ -520,32 +521,32 @@ void AddDescriptorsImpl() {
       "\022\013\n\003Yaw\030\002 \001(\002\022\020\n\010Duration\030\003 \001(\002\"q\n\014W_C_L"
       "oginMap\022$\n\nPacketHead\030\001 \001(\0132\020.message.Ip"
       "acket\022\n\n\002Id\030\002 \001(\003\022\035\n\003Pos\030\003 \001(\0132\020.message"
-      ".Point3F\022\020\n\010Rotation\030\004 \001(\002\"\225\005\n\nW_C_ENTIT"
+      ".Point3F\022\020\n\010Rotation\030\004 \001(\002\"\245\005\n\nW_C_ENTIT"
       "Y\022$\n\nPacketHead\030\001 \001(\0132\020.message.Ipacket\022"
       ".\n\nEntityInfo\030\002 \003(\0132\032.message.W_C_ENTITY"
-      ".Entity\032\260\004\n\006Entity\022\n\n\002Id\030\001 \001(\003\0221\n\004Data\030\002"
+      ".Entity\032\300\004\n\006Entity\022\n\n\002Id\030\001 \001(\003\0221\n\004Data\030\002"
       " \001(\0132#.message.W_C_ENTITY.Entity.DataMas"
       "k\0221\n\004Move\030\003 \001(\0132#.message.W_C_ENTITY.Ent"
       "ity.MoveMask\0223\n\005Stats\030\004 \001(\0132$.message.W_"
-      "C_ENTITY.Entity.StatsMask\032,\n\010DataMask\022\014\n"
-      "\004Type\030\001 \001(\005\022\022\n\nRemoveFlag\030\002 \001(\010\032;\n\010MoveM"
-      "ask\022\035\n\003Pos\030\001 \001(\0132\020.message.Point3F\022\020\n\010Ro"
-      "tation\030\002 \001(\002\032\223\002\n\tStatsMask\022\n\n\002HP\030\001 \001(\005\022\n"
-      "\n\002MP\030\002 \001(\005\022\r\n\005MaxHP\030\003 \001(\005\022\r\n\005MaxMP\030\004 \001(\005"
-      "\022\021\n\tPhyDamage\030\005 \001(\005\022\022\n\nPhyDefence\030\006 \001(\005\022"
-      "\021\n\tSplDamage\030\007 \001(\005\022\022\n\nSplDefence\030\010 \001(\005\022\014"
-      "\n\004Heal\030\t \001(\005\022\025\n\rCriticalTimes\030\n \001(\005\022\020\n\010C"
-      "ritical\030\013 \001(\005\022\031\n\021AntiCriticalTimes\030\014 \001(\005"
-      "\022\024\n\014AntiCritical\030\r \001(\005\022\r\n\005Dodge\030\016 \001(\005\022\013\n"
-      "\003Hit\030\017 \001(\005\"s\n\016W_C_DEL_SIMOBJ\022$\n\nPacketHe"
-      "ad\030\001 \001(\0132\020.message.Ipacket\022\n\n\002Id\030\002 \001(\003\022\035"
-      "\n\003Pos\030\003 \001(\0132\020.message.Point3F\022\020\n\010Rotatio"
-      "n\030\004 \001(\002\"H\n\020C_W_LoginCopyMap\022$\n\nPacketHea"
-      "d\030\001 \001(\0132\020.message.Ipacket\022\016\n\006DataId\030\002 \001("
-      "\005b\006proto3"
+      "C_ENTITY.Entity.StatsMask\032<\n\010DataMask\022\014\n"
+      "\004Type\030\001 \001(\005\022\016\n\006DataId\030\002 \001(\005\022\022\n\nRemoveFla"
+      "g\030\003 \001(\010\032;\n\010MoveMask\022\035\n\003Pos\030\001 \001(\0132\020.messa"
+      "ge.Point3F\022\020\n\010Rotation\030\002 \001(\002\032\223\002\n\tStatsMa"
+      "sk\022\n\n\002HP\030\001 \001(\005\022\n\n\002MP\030\002 \001(\005\022\r\n\005MaxHP\030\003 \001("
+      "\005\022\r\n\005MaxMP\030\004 \001(\005\022\021\n\tPhyDamage\030\005 \001(\005\022\022\n\nP"
+      "hyDefence\030\006 \001(\005\022\021\n\tSplDamage\030\007 \001(\005\022\022\n\nSp"
+      "lDefence\030\010 \001(\005\022\014\n\004Heal\030\t \001(\005\022\025\n\rCritical"
+      "Times\030\n \001(\005\022\020\n\010Critical\030\013 \001(\005\022\031\n\021AntiCri"
+      "ticalTimes\030\014 \001(\005\022\024\n\014AntiCritical\030\r \001(\005\022\r"
+      "\n\005Dodge\030\016 \001(\005\022\013\n\003Hit\030\017 \001(\005\"s\n\016W_C_DEL_SI"
+      "MOBJ\022$\n\nPacketHead\030\001 \001(\0132\020.message.Ipack"
+      "et\022\n\n\002Id\030\002 \001(\003\022\035\n\003Pos\030\003 \001(\0132\020.message.Po"
+      "int3F\022\020\n\010Rotation\030\004 \001(\002\"H\n\020C_W_LoginCopy"
+      "Map\022$\n\nPacketHead\030\001 \001(\0132\020.message.Ipacke"
+      "t\022\016\n\006DataId\030\002 \001(\005b\006proto3"
   };
   ::google::protobuf::DescriptorPool::InternalAddGeneratedFile(
-      descriptor, 1289);
+      descriptor, 1305);
   ::google::protobuf::MessageFactory::InternalRegisterGeneratedFile(
     "game.proto", &protobuf_RegisterTypes);
   ::protobuf_message_2eproto::AddDescriptors();
@@ -2182,6 +2183,7 @@ void W_C_ENTITY_Entity_DataMask::InitAsDefaultInstance() {
 }
 #if !defined(_MSC_VER) || _MSC_VER >= 1900
 const int W_C_ENTITY_Entity_DataMask::kTypeFieldNumber;
+const int W_C_ENTITY_Entity_DataMask::kDataIdFieldNumber;
 const int W_C_ENTITY_Entity_DataMask::kRemoveFlagFieldNumber;
 #endif  // !defined(_MSC_VER) || _MSC_VER >= 1900
 
@@ -2278,10 +2280,24 @@ bool W_C_ENTITY_Entity_DataMask::MergePartialFromCodedStream(
         break;
       }
 
-      // bool RemoveFlag = 2;
+      // int32 DataId = 2;
       case 2: {
         if (static_cast< ::google::protobuf::uint8>(tag) ==
             static_cast< ::google::protobuf::uint8>(16u /* 16 & 0xFF */)) {
+
+          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
+                   ::google::protobuf::int32, ::google::protobuf::internal::WireFormatLite::TYPE_INT32>(
+                 input, &dataid_)));
+        } else {
+          goto handle_unusual;
+        }
+        break;
+      }
+
+      // bool RemoveFlag = 3;
+      case 3: {
+        if (static_cast< ::google::protobuf::uint8>(tag) ==
+            static_cast< ::google::protobuf::uint8>(24u /* 24 & 0xFF */)) {
 
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
                    bool, ::google::protobuf::internal::WireFormatLite::TYPE_BOOL>(
@@ -2323,9 +2339,14 @@ void W_C_ENTITY_Entity_DataMask::SerializeWithCachedSizes(
     ::google::protobuf::internal::WireFormatLite::WriteInt32(1, this->type(), output);
   }
 
-  // bool RemoveFlag = 2;
+  // int32 DataId = 2;
+  if (this->dataid() != 0) {
+    ::google::protobuf::internal::WireFormatLite::WriteInt32(2, this->dataid(), output);
+  }
+
+  // bool RemoveFlag = 3;
   if (this->removeflag() != 0) {
-    ::google::protobuf::internal::WireFormatLite::WriteBool(2, this->removeflag(), output);
+    ::google::protobuf::internal::WireFormatLite::WriteBool(3, this->removeflag(), output);
   }
 
   if ((_internal_metadata_.have_unknown_fields() &&  ::google::protobuf::internal::GetProto3PreserveUnknownsDefault())) {
@@ -2347,9 +2368,14 @@ void W_C_ENTITY_Entity_DataMask::SerializeWithCachedSizes(
     target = ::google::protobuf::internal::WireFormatLite::WriteInt32ToArray(1, this->type(), target);
   }
 
-  // bool RemoveFlag = 2;
+  // int32 DataId = 2;
+  if (this->dataid() != 0) {
+    target = ::google::protobuf::internal::WireFormatLite::WriteInt32ToArray(2, this->dataid(), target);
+  }
+
+  // bool RemoveFlag = 3;
   if (this->removeflag() != 0) {
-    target = ::google::protobuf::internal::WireFormatLite::WriteBoolToArray(2, this->removeflag(), target);
+    target = ::google::protobuf::internal::WireFormatLite::WriteBoolToArray(3, this->removeflag(), target);
   }
 
   if ((_internal_metadata_.have_unknown_fields() &&  ::google::protobuf::internal::GetProto3PreserveUnknownsDefault())) {
@@ -2376,7 +2402,14 @@ size_t W_C_ENTITY_Entity_DataMask::ByteSizeLong() const {
         this->type());
   }
 
-  // bool RemoveFlag = 2;
+  // int32 DataId = 2;
+  if (this->dataid() != 0) {
+    total_size += 1 +
+      ::google::protobuf::internal::WireFormatLite::Int32Size(
+        this->dataid());
+  }
+
+  // bool RemoveFlag = 3;
   if (this->removeflag() != 0) {
     total_size += 1 + 1;
   }
@@ -2413,6 +2446,9 @@ void W_C_ENTITY_Entity_DataMask::MergeFrom(const W_C_ENTITY_Entity_DataMask& fro
   if (from.type() != 0) {
     set_type(from.type());
   }
+  if (from.dataid() != 0) {
+    set_dataid(from.dataid());
+  }
   if (from.removeflag() != 0) {
     set_removeflag(from.removeflag());
   }
@@ -2443,6 +2479,7 @@ void W_C_ENTITY_Entity_DataMask::Swap(W_C_ENTITY_Entity_DataMask* other) {
 void W_C_ENTITY_Entity_DataMask::InternalSwap(W_C_ENTITY_Entity_DataMask* other) {
   using std::swap;
   swap(type_, other->type_);
+  swap(dataid_, other->dataid_);
   swap(removeflag_, other->removeflag_);
   _internal_metadata_.Swap(&other->_internal_metadata_);
   swap(_cached_size_, other->_cached_size_);

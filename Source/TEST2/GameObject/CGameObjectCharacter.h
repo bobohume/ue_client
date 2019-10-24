@@ -34,6 +34,10 @@ public:
     UPROPERTY(VisibleAnywhere, BlueprintReadWrite, meta=(DisplayName="TargetId"), Category = "Entity")
     int64 TargetId;
 
+	// NPC DATA Id
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Entity")
+	int32 DataId;
+
 	// Entity move
 	//UFUNCTION(BlueprintImplementableEvent, Category = "Entity")
 	//void MoveTo(FVector pos);
