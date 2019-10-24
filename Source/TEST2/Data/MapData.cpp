@@ -4,7 +4,7 @@
 #include "DataFile.h"
 #include "Paths.h"
 
-#define MAP_DATA_NAME  "Content/data/Map.dat"
+#define MAP_DATA_NAME  "data/Map.dat"
 
 MapDataRes::MapDataRes() 
 {
@@ -18,7 +18,7 @@ MapDataRes::~MapDataRes()
 
 bool MapDataRes::Read()
 {
-	FString str = FPaths::GameDir() + MAP_DATA_NAME;
+	FString str = FPaths::GameContentDir() + MAP_DATA_NAME;
 	CDataFile file;
 	RData lineData;
 	if (!file.ReadDataFile(TCHAR_TO_UTF8(*str))) {
@@ -43,7 +43,6 @@ bool MapDataRes::Read()
 		pData->Height = lineData.Int(MAP_DATA_NAME, "Height");
 
 		file.GetData(lineData);//NavPath
-
 		AddData(pData->Id, pData);
 	}
 

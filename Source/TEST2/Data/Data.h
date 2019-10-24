@@ -1,6 +1,7 @@
 #pragma once  
 
 #include "Engine/DataTable.h"  
+#include "CoreMinimal.h"
 #include "Data.generated.h"  
 
 USTRUCT(BlueprintType)
@@ -14,20 +15,22 @@ public:
 	{}
 
 	/** The 'Name' column is the same as the XP Level */
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = AiData)
+	FString Name;
 
 	/** XP to get to the given level from the previous level */
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = AiData)
-		int32 Id;
+	TSoftObjectPtr<UTexture2D> Icon;
 
 	/** Extra HitPoints gained at this level */
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = AiData)
-		int32 Op;
+	TSoftObjectPtr<USkeletalMesh> Mesh;
 
 	/** Icon to use for Achivement */
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = AiData)
-		int32 Type;
+	TSoftClassPtr<UAnimBlueprintGeneratedClass> Animal;
 
 	/** Icon to use for Achivement */
 	//UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = AiData)
-	//	TAssetPtr<UTexture> AchievementIcon;
+	//TSoftObjectPtr<UTexture> AchievementIcon;
 };
