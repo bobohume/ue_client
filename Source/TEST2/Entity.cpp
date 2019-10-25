@@ -56,6 +56,7 @@ bool EntityMgr::_W_C_ENTITY(::google::protobuf::Message* _packet) {
 				EntityMap.erase(Id);
 				continue;
 			}
+			pEntity->Init();
 		}
 
 		if (entityInfo.has_move()) {

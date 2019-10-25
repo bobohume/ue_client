@@ -38,7 +38,7 @@ public:
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Entity")
 	int32 DataId;
 
-	// Entity move
-	//UFUNCTION(BlueprintImplementableEvent, Category = "Entity")
-	//void MoveTo(FVector pos);
+	//Entity move
+	UFUNCTION(BlueprintImplementableEvent, Category = "Entity")
+	void Init();
 };
