@@ -1,31 +1,31 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
 
-#include "CGameObjectCharacter.h"
+#include "GameObjectCharacter.h"
 
 // Sets default values
-ACGameObjectCharacter::ACGameObjectCharacter()
+AGameObjectCharacter::AGameObjectCharacter()
 {
  	// Set this character to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = true;
 }
 
 // Called when the game starts or when spawned
-void ACGameObjectCharacter::BeginPlay()
+void AGameObjectCharacter::BeginPlay()
 {
 	Super::BeginPlay();
 	
 }
 
 // Called every frame
-void ACGameObjectCharacter::Tick(float DeltaTime)
+void AGameObjectCharacter::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
 
 }
 
 // Called to bind functionality to input
-void ACGameObjectCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
+void AGameObjectCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
 {
 	Super::SetupPlayerInputComponent(PlayerInputComponent);
 

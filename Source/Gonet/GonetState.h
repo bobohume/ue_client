@@ -4,20 +4,20 @@
 #include <unordered_map>
 #include "CoreMinimal.h"
 #include "GameFramework/GameStateBase.h"
-#include "TEST2Character.h"
-#include "CGonetState.generated.h"
+#include "GonetCharacter.h"
+#include "GonetState.generated.h"
 
 /**
  * 
  */
 UCLASS()
-class ACGonetState : public AGameStateBase
+class AGonetState : public AGameStateBase
 {
 	GENERATED_BODY()
 	
 public:
 	// Sets default values for this actor's properties
-	ACGonetState();
+	AGonetState();
 
 protected:
 	// Called when the game starts or when spawned
@@ -34,7 +34,7 @@ public:
 	UFUNCTION(BlueprintImplementableEvent, Category = "Gonet|Entity")
 	APawn* SpawnPlayer(FVector pos, FRotator rotation);
 
-	std::unordered_map<int64, ACGameObjectCharacter*> EntityMap;
+	std::unordered_map<int64, AGameObjectCharacter*> EntityMap;
 };
 //调试变量不优化掉
 //#pragma optimize("",off) 

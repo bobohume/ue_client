@@ -1,6 +1,6 @@
 // Copyright 1998-2019 Epic Games, Inc. All Rights Reserved.
 
-#include "TEST2Character.h"
+#include "GonetCharacter.h"
 #include "HeadMountedDisplayFunctionLibrary.h"
 #include "Camera/CameraComponent.h"
 #include "Components/CapsuleComponent.h"
@@ -16,9 +16,9 @@ using namespace WinTcp;
 using namespace message;
 
 //////////////////////////////////////////////////////////////////////////
-// ATEST2Character
+// AGonetCharacter
 
-ATEST2Character::ATEST2Character()
+AGonetCharacter::AGonetCharacter()
 {
 	// Set size for collision capsule
 	GetCapsuleComponent()->InitCapsuleSize(42.f, 96.0f);
@@ -60,61 +60,61 @@ ATEST2Character::ATEST2Character()
 //////////////////////////////////////////////////////////////////////////
 // Input
 
-void ATEST2Character::SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent)
+void AGonetCharacter::SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent)
 {
 	// Set up gameplay key bindings
 	check(PlayerInputComponent);
 	PlayerInputComponent->BindAction("Jump", IE_Pressed, this, &ACharacter::Jump);
 	PlayerInputComponent->BindAction("Jump", IE_Released, this, &ACharacter::StopJumping);
 
-	PlayerInputComponent->BindAxis("MoveForward", this, &ATEST2Character::MoveForward);
-	PlayerInputComponent->BindAxis("MoveRight", this, &ATEST2Character::MoveRight);
+	PlayerInputComponent->BindAxis("MoveForward", this, &AGonetCharacter::MoveForward);
+	PlayerInputComponent->BindAxis("MoveRight", this, &AGonetCharacter::MoveRight);
 
 	// We have 2 versions of the rotation bindings to handle different kinds of devices differently
 	// "turn" handles devices that provide an absolute delta, such as a mouse.
 	// "turnrate" is for devices that we choose to treat as a rate of change, such as an analog joystick
 	PlayerInputComponent->BindAxis("Turn", this, &APawn::AddControllerYawInput);
-	PlayerInputComponent->BindAxis("TurnRate", this, &ATEST2Character::TurnAtRate);
+	PlayerInputComponent->BindAxis("TurnRate", this, &AGonetCharacter::TurnAtRate);
 	PlayerInputComponent->BindAxis("LookUp", this, &APawn::AddControllerPitchInput);
-	PlayerInputComponent->BindAxis("LookUpRate", this, &ATEST2Character::LookUpAtRate);
+	PlayerInputComponent->BindAxis("LookUpRate", this, &AGonetCharacter::LookUpAtRate);
 
 	// handle touch devices
-	PlayerInputComponent->BindTouch(IE_Pressed, this, &ATEST2Character::TouchStarted);
-	PlayerInputComponent->BindTouch(IE_Released, this, &ATEST2Character::TouchStopped);
+	PlayerInputComponent->BindTouch(IE_Pressed, this, &AGonetCharacter::TouchStarted);
+	PlayerInputComponent->BindTouch(IE_Released, this, &AGonetCharacter::TouchStopped);
 
 	// VR headset functionality
-	PlayerInputComponent->BindAction("ResetVR", IE_Pressed, this, &ATEST2Character::OnResetVR);
+	PlayerInputComponent->BindAction("ResetVR", IE_Pressed, this, &AGonetCharacter::OnResetVR);
 }
 
 
-void ATEST2Character::OnResetVR()
+void AGonetCharacter::OnResetVR()
 {
 	UHeadMountedDisplayFunctionLibrary::ResetOrientationAndPosition();
 }
 
-void ATEST2Character::TouchStarted(ETouchIndex::Type FingerIndex, FVector Location)
+void AGonetCharacter::TouchStarted(ETouchIndex::Type FingerIndex, FVector Location)
 {
 		Jump();
 }
 
-void ATEST2Character::TouchStopped(ETouchIndex::Type FingerIndex, FVector Location)
+void AGonetCharacter::TouchStopped(ETouchIndex::Type FingerIndex, FVector Location)
 {
 		StopJumping();
 }
 
-void ATEST2Character::TurnAtRate(float Rate)
+void AGonetCharacter::TurnAtRate(float Rate)
 {
 	// calculate delta for this frame from the rate information
 	AddControllerYawInput(Rate * BaseTurnRate * GetWorld()->GetDeltaSeconds());
 }
 
-void ATEST2Character::LookUpAtRate(float Rate)
+void AGonetCharacter::LookUpAtRate(float Rate)
 {
 	// calculate delta for this frame from the rate information
 	AddControllerPitchInput(Rate * BaseLookUpRate * GetWorld()->GetDeltaSeconds());
 }
 
-void ATEST2Character::MoveForward(float Value)
+void AGonetCharacter::MoveForward(float Value)
 {
 	if ((Controller != NULL) && (Value != 0.0f))
 	{
@@ -129,7 +129,7 @@ void ATEST2Character::MoveForward(float Value)
 	}
 }
 
-void ATEST2Character::MoveRight(float Value)
+void AGonetCharacter::MoveRight(float Value)
 {
 	if ( (Controller != NULL) && (Value != 0.0f) )
 	{
@@ -146,7 +146,7 @@ void ATEST2Character::MoveRight(float Value)
 }
 
 // Called every frame
-void ATEST2Character::Tick(float DeltaTime)
+void AGonetCharacter::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
 	if (m_bMove) {
@@ -171,7 +171,7 @@ void ATEST2Character::Tick(float DeltaTime)
 	}
 }
 
-void ATEST2Character::MovePacket(FVector location, float yaw, float duration){
+void AGonetCharacter::MovePacket(FVector location, float yaw, float duration){
     if(GetWorld()->TimeSince(m_fMoveTick) < 0.1){
         return;
 	}   

@@ -4,11 +4,11 @@
 
 #include "CoreMinimal.h"
 #include "GameFramework/Character.h"
-#include "GameObject/CGameObjectCharacter.h"
-#include "TEST2Character.generated.h"
+#include "GameObject/GameObjectCharacter.h"
+#include "GonetCharacter.generated.h"
 
 UCLASS(config=Game)
-class ATEST2Character : public ACGameObjectCharacter
+class AGonetCharacter : public AGameObjectCharacter
 {
 	GENERATED_BODY()
 
@@ -20,7 +20,7 @@ class ATEST2Character : public ACGameObjectCharacter
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Camera, meta = (AllowPrivateAccess = "true"))
 	class UCameraComponent* FollowCamera;
 public:
-	ATEST2Character();
+	AGonetCharacter();
 
 	/** Base turn rate, in deg/sec. Other scaling may affect final turn rate. */
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category=Camera)

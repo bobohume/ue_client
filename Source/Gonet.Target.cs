@@ -3,11 +3,11 @@
 using UnrealBuildTool;
 using System.Collections.Generic;
 
-public class TEST2Target : TargetRules
+public class GonetTarget : TargetRules
 {
-	public TEST2Target(TargetInfo Target) : base(Target)
+	public GonetTarget (TargetInfo Target) : base(Target)
 	{
 		Type = TargetType.Game;
-		ExtraModuleNames.Add("TEST2");
+		ExtraModuleNames.Add("Gonet");
 	}
 }

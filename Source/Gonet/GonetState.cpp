@@ -1,12 +1,12 @@
 // Fill out your copyright notice in the Description page of Project Settings.
-#include "CGonetState.h"
+#include "GonetState.h"
 #include "WinTcp/ClientSocket.h"
 #include "WinTcp/Account.h"
 #include "Entity.h"
 #include "Player/Player.h"
 #include "Data/Data.h"
 
-ACGonetState::ACGonetState()
+AGonetState::AGonetState()
 {
 	// Set this actor to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = true;
@@ -17,7 +17,7 @@ ACGonetState::ACGonetState()
 }
 
 // Called when the game starts or when spawned
-void ACGonetState::BeginPlay()
+void AGonetState::BeginPlay()
 {
 	Super::BeginPlay();
 	WinTcp::CLIENT_TCP->Disconnect();
@@ -27,7 +27,7 @@ void ACGonetState::BeginPlay()
 }
 
 // Called every frame
-void ACGonetState::Tick(float DeltaTime)
+void AGonetState::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
 	WinTcp::CLIENT_TCP->update(0);

@@ -4,10 +4,10 @@
 
 #include "CoreMinimal.h"
 #include "Kismet/BlueprintFunctionLibrary.h"
-#include "GameObject/CGameObjectCharacter.h"
+#include "GameObject/GameObjectCharacter.h"
 #include <unordered_map>
 #include "Data/Stats.h"
-#include "CBlueprintFunctionLibrary.generated.h"
+#include "GonetBlueprintFunctionLibrary.generated.h"
 
 UENUM(BlueprintType)
 enum class EnDataType :uint8
@@ -19,7 +19,7 @@ enum class EnDataType :uint8
  */
 //蓝图全局方法
 UCLASS()
-class UCBlueprintFunctionLibrary : public UBlueprintFunctionLibrary
+class UGonetBlueprintFunctionLibrary : public UBlueprintFunctionLibrary
 {
 	GENERATED_BODY()
 	
@@ -48,7 +48,7 @@ public:
     //----------------------entiy--------------------------//
     /** get enity by id */
     UFUNCTION(BlueprintPure, meta = (DisplayName = "GetEntity(id)", /*CompactNodeTitle = "->",*/ BlueprintAutocast), Category = "Gonet|Entity")
-    static ACGameObjectCharacter* GetEntity(int64 Id);
+    static AGameObjectCharacter* GetEntity(int64 Id);
 
 	//-----------------------stats-----------------------//
 	UFUNCTION(BlueprintPure, meta = (DisplayName = "+Stats(FStats3 a, FStats3 b)", CompactNodeTitle = "+", BlueprintAutocast), Category = "Gonet|Data")

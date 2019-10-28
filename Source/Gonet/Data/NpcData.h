@@ -8,7 +8,7 @@
 #include "GameFramework/Actor.h"
 #include "GameFramework/Info.h"
 #include "GameFramework/Character.h"
-#include "GameObject/CGameObjectCharacter.h"
+#include "GameObject/GameObjectCharacter.h"
 #include "NpcData.generated.h"  
 
 USTRUCT(BlueprintType)

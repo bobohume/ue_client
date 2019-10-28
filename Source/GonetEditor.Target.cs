@@ -3,11 +3,11 @@
 using UnrealBuildTool;
 using System.Collections.Generic;
 
-public class TEST2EditorTarget : TargetRules
+public class GonetEditorTarget : TargetRules
 {
-	public TEST2EditorTarget(TargetInfo Target) : base(Target)
+	public GonetEditorTarget(TargetInfo Target) : base(Target)
 	{
 		Type = TargetType.Editor;
-		ExtraModuleNames.Add("TEST2");
+		ExtraModuleNames.Add("Gonet");
 	}
 }
