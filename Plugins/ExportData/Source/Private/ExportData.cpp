@@ -25,7 +25,7 @@
 
 #ifdef _WIN32
 static const char* EXPORT_PATH = "E:/git/myserver/bin/nav/";
-#else
+#elif
 static const char* EXPORT_PATH = "/Users/gonet/git/myserver/bin/nav/";
 #endif
 
@@ -132,6 +132,7 @@ dtTileRef3 getTileRef(const dtMeshTile* tile, const dtNavMesh* mesh)
 	return (dtTileRef3)encodePolyId(tile->salt, it, 0, mesh);
 }
 
+#pragma optimize("",off) 
 void FExportDataModule::SaveData(const char* path, const dtNavMesh* mesh)
 {
 	if (!mesh) return;
@@ -250,6 +251,7 @@ void FExportDataModule::SaveData(const char* path, const dtNavMesh* mesh)
 
 	fclose(fp);
 }
+#pragma optimize("",on) 
 
 #undef LOCTEXT_NAMESPACE
 	
