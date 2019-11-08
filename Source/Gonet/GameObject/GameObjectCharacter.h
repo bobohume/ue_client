@@ -4,6 +4,7 @@
 
 #include "CoreMinimal.h"
 #include "GameFramework/Character.h"
+#include "Data/Stats.h"
 #include "GameObjectCharacter.generated.h"
 
 UCLASS()
@@ -29,6 +30,10 @@ public:
 	// Entity Id
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Entity")
 	int64 Id;
+
+	//  µÃÂ Ù–‘
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Entity")
+	FStats3 Stats;
     
     // Entity TargetId
     UPROPERTY(VisibleAnywhere, BlueprintReadWrite, meta=(DisplayName="TargetId"), Category = "Entity")
@@ -38,7 +43,13 @@ public:
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Entity")
 	int32 DataId;
 
+public:
+	//for blueprint
 	//entity init
 	UFUNCTION(BlueprintImplementableEvent, Category = "Entity")
 	void Init();
+
+	//show damage
+	UFUNCTION(BlueprintImplementableEvent, Category = "Entity")
+	void ShowDamageAmount(int32 damage);
 };

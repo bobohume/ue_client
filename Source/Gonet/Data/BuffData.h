@@ -19,7 +19,7 @@ struct FBuffData : public FStats3
 
 public:
 
-	FBuffData()
+	FBuffData():Lv(0), Name(""), Icon(""), Desc("")
 	{}
 
 	/** buff lv */

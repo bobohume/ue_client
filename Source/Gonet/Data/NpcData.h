@@ -18,7 +18,7 @@ struct FNpcData : public FTableRowBase
 
 public:
 
-	FNpcData()
+	FNpcData():Name(""), Icon(NULL), Mesh(NULL), Anim(NULL)
 	{}
 
 	/** npc name */

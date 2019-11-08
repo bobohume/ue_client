@@ -101,11 +101,11 @@ ParsePacekt:
 	seekToTcpEnd(&m_pInBuffer[nCurSize], nBufferSize, bFindFlag, nPacketSize);
 	if (bFindFlag) {
 		if (nBufferSize == nPacketSize) {		//完整包
-			HandlePacket(m_pInBuffer, nPacketSize - TCP_END_LENGTH);
+			HandlePacket(&m_pInBuffer[nCurSize], nPacketSize - TCP_END_LENGTH);
 			m_nHalfSize = 0;
 		}
 		else if (nBufferSize > nPacketSize) {
-			HandlePacket(m_pInBuffer, nPacketSize - TCP_END_LENGTH);
+			HandlePacket(&m_pInBuffer[nCurSize], nPacketSize - TCP_END_LENGTH);
 			nCurSize += nPacketSize;
 			goto ParsePacekt;
 		}

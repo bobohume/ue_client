@@ -33,14 +33,16 @@ bool EntityMgr::_W_C_ENTITY(::google::protobuf::Message* _packet) {
 		if (Id == WinTcp::ACCOUNT->m_AccountId) {
 			ACharacter* pCharacter = UGameplayStatics::GetPlayerCharacter(GWorld, 0);
 			pEntity = Cast<AGameObjectCharacter>(pCharacter);
-		}else if (itr == EntityMap.end()) {//创建实体
+		}else if (itr != EntityMap.end()) {
+			pEntity = itr->second;
+
+		}else if(entityInfo.has_data() && !entityInfo.data().removeflag()) {//创建实体
 			FVector pos = FVector(0, 0, 250);
 			if (entityInfo.has_move()) {
 				pos = FVector(-entityInfo.move().pos().x(), -entityInfo.move().pos().y(), entityInfo.move().pos().z());
 			}
 			pEntity = Cast<AGameObjectCharacter>(pGonetState->SpawnPlayer(pos, FRotator(0)));
-		}else {
-			pEntity = itr->second;
+			pEntity->DataId = entityInfo.data().dataid();
 		}
 
 		if (pEntity == NULL) {
@@ -48,17 +50,13 @@ bool EntityMgr::_W_C_ENTITY(::google::protobuf::Message* _packet) {
 			continue;
 		}
 
-		if (entityInfo.has_data()) {
-			pEntity->Id = Id;
-			pEntity->DataId = entityInfo.data().dataid();
-			if (entityInfo.data().removeflag()) {
-				pEntity->Destroy();
-				EntityMap.erase(Id);
-				continue;
-			}
-			pEntity->Init();
+		pEntity->Id = Id;
+		if (entityInfo.has_data() && entityInfo.data().removeflag()) {
+			pEntity->Destroy();
+			EntityMap.erase(Id);
+			continue;
 		}
-
+		pEntity->Init();
 		if (entityInfo.has_move()) {
 			FVector pos = FVector(-entityInfo.move().pos().x(), -entityInfo.move().pos().y(), entityInfo.move().pos().z());
 			if (Id == WinTcp::ACCOUNT->m_AccountId) {
@@ -74,6 +72,31 @@ bool EntityMgr::_W_C_ENTITY(::google::protobuf::Message* _packet) {
 				if (pAi) {
 					pAi->MoveToLocation(pos);
 				}
+			}
+		}
+
+		//属性变化
+		if (entityInfo.has_stats()) {
+			FStats3 oldStats = pEntity->Stats;
+			pEntity->Stats.HP = entityInfo.stats().hp();
+			pEntity->Stats.MP = entityInfo.stats().mp();
+			pEntity->Stats.MaxHP = entityInfo.stats().maxhp();
+			pEntity->Stats.MaxMP = entityInfo.stats().maxmp();
+			pEntity->Stats.PhyDamage = entityInfo.stats().phydamage();
+			pEntity->Stats.PhyDefence = entityInfo.stats().phydefence();
+			pEntity->Stats.SplDamage = entityInfo.stats().spldamage();
+			pEntity->Stats.SplDefence = entityInfo.stats().spldefence();
+			pEntity->Stats.Heal = entityInfo.stats().heal();
+			pEntity->Stats.CriticalTimes = entityInfo.stats().criticaltimes();
+			pEntity->Stats.Critical_gPc = entityInfo.stats().critical();
+			pEntity->Stats.AntiCriticalTimes = entityInfo.stats().anticriticaltimes();
+			pEntity->Stats.AntiCritical_gPc = entityInfo.stats().anticritical();
+			pEntity->Stats.Dodge_gPc = entityInfo.stats().dodge();
+			pEntity->Stats.Hit_gPc = entityInfo.stats().hit();
+			FStats3 newStats = pEntity->Stats;
+			newStats -= oldStats;
+			if (newStats.HP != 0) {
+				pEntity->ShowDamageAmount(newStats.HP);
 			}
 		}
 

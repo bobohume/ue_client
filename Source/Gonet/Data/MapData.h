@@ -11,7 +11,7 @@ struct FMapData : public FTableRowBase
 
 public:
 
-	FMapData()
+	FMapData():Id(0), Type(0), Width(0), Height(0)
 	{}
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = MapData)

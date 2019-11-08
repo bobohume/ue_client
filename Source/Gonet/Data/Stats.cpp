@@ -45,12 +45,50 @@ float GetDamageReduceSpl(int32 val) {
 FStats3 g_Stats;
 FStats3::FStats3()
 {
-	//Clear();
+	Clear();
 }
 
 void FStats3::Clear()
 {
-	dMemset(this, 0, sizeof(FStats));
+	HP = 0;
+	HP_Pc = 0;
+	HP_gPc = 0;
+	MP = 0;
+	MP_Pc = 0;
+	MP_gPc = 0;
+	MaxHP = 0;
+	MaxHP_Pc = 0;
+	MaxHP_gPc = 0;
+	MaxMP = 0;
+	MaxMP_Pc = 0;
+	MaxMP_gPc = 0;
+	PhyDamage = 0;
+	PhyDamage_Pc = 0;
+	PhyDamage_gPc = 0;
+	PhyDefence = 0;
+	PhyDefence_Pc = 0;
+	PhyDefence_gPc = 0;
+	SplDamage = 0;
+	SplDamage_Pc = 0;
+	SplDamage_gPc = 0;
+	SplDefence = 0;
+	SplDefence_Pc = 0;
+	SplDefence_gPc = 0;
+	Heal = 0;
+	Heal_Pc = 0;
+	Heal_gPc = 0;
+
+	Velocity_gPc = 0;
+	CriticalRating = 0;
+	CriticalTimes = 0;
+	Critical_gPc = 0;
+	AntiCriticalRating = 0;
+	AntiCriticalTimes = 0;
+	AntiCritical_gPc = 0;
+	DodgeRating = 0;
+	Dodge_gPc = 0;
+	HitRating = 0;
+	Hit_gPc = 0;
 }
 
 // 做A+=B和A-=B时，注意A::HP和A::HP_Pc没有做运算。所以一般来说A的初始值都为0

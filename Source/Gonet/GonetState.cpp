@@ -4,7 +4,6 @@
 #include "WinTcp/Account.h"
 #include "Entity.h"
 #include "Player/Player.h"
-#include "Data/Data.h"
 
 AGonetState::AGonetState()
 {
@@ -23,7 +22,6 @@ void AGonetState::BeginPlay()
 	WinTcp::CLIENT_TCP->Disconnect();
 	WinTcp::CLIENT_TCP->Connect("127.0.0.1", 31700);
 	EntityMap.clear();
-	DATAMGR->GetNpcData(FString("199999"));
 }
 
 // Called every frame
